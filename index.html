@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Grammar Lab 7 | Platform Eksplorasi Grammar</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@400;600&family=Nunito:wght@400;700;800&family=Orbitron:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf6fb;--card:#fff;--ink:#0b2540;--mut:#58708a;--pri:#0a7ea4;--pri2:#16b3c9;--acc:#ff9f1c;--ok:#1f9d55;--bad:#d64545;--line:#cfe3ee;--h1:#0a7ea4;--h2:#2bd1c8;--on:#fff;--hf:'Fredoka',sans-serif;--bf:'Nunito',sans-serif}
+[data-theme=light]{--bg:#f5f7fa;--line:#dde3ea;--pri:#3558d6;--pri2:#6f8cff;--h1:#3558d6;--h2:#7b5cff}
+[data-theme=dark]{--bg:#0e1621;--card:#182636;--ink:#e8f1f8;--mut:#93a8bc;--pri:#4cc2ff;--pri2:#7ee0ff;--acc:#ffb84d;--ok:#46d483;--bad:#ff6b6b;--line:#27394d;--h1:#1b6b9a;--h2:#1fa6a0;--on:#06121c}
+[data-theme=synthwave]{--bg:#1a0b2e;--card:#2a1048;--ink:#f5e9ff;--mut:#c3a6e6;--pri:#ff2fb3;--pri2:#00e5ff;--acc:#ffe14d;--ok:#3dffa0;--bad:#ff5470;--line:#4b2380;--h1:#ff2fb3;--h2:#7b2ff7;--on:#1a0b2e;--hf:'Orbitron',sans-serif}
+[data-theme=sakura]{--bg:#fff0f5;--card:#fff;--ink:#4a1f33;--mut:#9a6479;--pri:#e0507a;--pri2:#ff9ab8;--acc:#f2a65a;--line:#f7cfdc;--h1:#e0507a;--h2:#ffb3c8}
+[data-theme=kode]{--bg:#020b05;--card:#06150b;--ink:#b9ffcf;--mut:#6fb88a;--pri:#19e65e;--pri2:#8dffb3;--acc:#f5ff5a;--ok:#19e65e;--bad:#ff5a5a;--line:#0f3d1f;--h1:#0b7a33;--h2:#19e65e;--on:#020b05;--hf:ui-monospace,Menlo,monospace;--bf:ui-monospace,Menlo,monospace}
+[data-theme=kode] body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);z-index:50}
+[data-theme=synthwave] body::before{content:"";position:fixed;left:0;right:0;bottom:0;height:35vh;pointer-events:none;background:linear-gradient(transparent,rgba(255,47,179,.18)),repeating-linear-gradient(90deg,rgba(0,229,255,.25) 0 1px,transparent 1px 48px);transform:perspective(300px) rotateX(55deg);transform-origin:bottom;z-index:0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--bf);font-size:16px;line-height:1.5;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);min-height:100vh;position:relative}
+h1,h2,h3{font-family:var(--hf);margin:.2em 0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#bg span{position:absolute;bottom:-40px;opacity:.35;animation:fl linear infinite;font-size:22px}
+@keyframes fl{to{transform:translateY(-115vh) rotate(40deg)}}
+#app{position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px;padding:8px 14px}
+.brand{font-family:var(--hf);font-weight:600;font-size:20px;color:var(--pri);white-space:nowrap;cursor:pointer}
+.tabs{display:flex;gap:6px;overflow-x:auto;flex:1}
+.tab{border:0;background:transparent;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700;color:var(--mut);white-space:nowrap}
+.tab.on{background:var(--pri);color:var(--on)}
+.sync{font-size:12px;color:var(--mut);white-space:nowrap}
+.wrap{max-width:980px;margin:0 auto;padding:18px 14px 30px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}
+.hero{background:linear-gradient(135deg,var(--h1),var(--h2));color:#fff;border-radius:22px;padding:22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.hero h1{font-family:'Playfair Display',serif;font-size:30px;margin:0}
+.lvb{background:rgba(255,255,255,.2);border-radius:99px;padding:4px 14px;font-weight:800;display:inline-block}
+.xpb{height:12px;background:rgba(255,255,255,.3);border-radius:9px;overflow:hidden;margin-top:8px;min-width:200px}
+.xpb i{display:block;height:100%;background:#ffe14d}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(85px,1fr));gap:10px;margin:12px 0}
+.stat{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px;text-align:center}
+.stat b{display:block;font:600 24px var(--hf);color:var(--pri)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.chap{background:linear-gradient(150deg,hsl(var(--h) 70% 52%),hsl(calc(var(--h) + 30) 70% 42%));color:#fff;border-radius:18px;padding:16px;cursor:pointer;border:0;text-align:left;position:relative;overflow:hidden;animation:pop .4s both;transition:transform .15s}
+.chap:hover{transform:translateY(-3px)}
+.chap::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.25) 50%,transparent 60%);transform:translateX(-100%);animation:shim 4s infinite}
+@keyframes shim{to{transform:translateX(100%)}}
+@keyframes pop{from{opacity:0;transform:scale(.9)}}
+.chap .ic{font-size:34px}.chap h3{font-size:19px;margin:4px 0 0}.chap small{opacity:.9}
+.mark{grid-column:1/-1;text-align:center;font:600 15px var(--hf);color:var(--mut);border:2px dashed var(--line);border-radius:12px;padding:8px}
+.btn{background:var(--pri);color:var(--on);border:0;border-radius:12px;padding:10px 18px;font-weight:800;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.s{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.btn.d{background:var(--bad);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.lv{border:0;border-radius:12px;padding:10px 14px;color:#fff;font-weight:800;cursor:pointer;flex:1;min-width:150px;text-align:left}
+.lv small{display:block;font-weight:600;opacity:.95}
+.l0{background:#2e9b5a}.l1{background:#e08a0b}.l2{background:#c2406b}
+.bar{height:10px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--pri)}
+.qt{font:600 22px/1.45 var(--hf);margin:12px 0}
+.blank{display:inline-block;min-width:70px;border-bottom:3px solid var(--acc);margin:0 4px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font-weight:700}
+.opt b{background:var(--line);border-radius:8px;width:30px;height:30px;display:inline-grid;place-items:center;flex:none}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.sel{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 14%,var(--card))}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 20%,var(--card))}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 20%,var(--card))}
+.opt.dim{opacity:.6}
+.fb{border-radius:14px;padding:12px 14px;margin:12px 0;border:2px solid}
+.fb.ok{border-color:var(--ok)}.fb.bad{border-color:var(--bad)}
+.qimg{text-align:center}.qimg svg{max-width:260px;width:100%;background:color-mix(in srgb,var(--pri) 8%,var(--card));border-radius:14px}
+.stars{font-size:38px;letter-spacing:4px}
+.big{font:600 56px var(--hf);color:var(--pri)}
+.tbl{width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:14px}
+.tbl th,.tbl td{padding:8px;border-bottom:1px solid var(--line);text-align:left}
+.tbl-w{overflow-x:auto}
+.red{color:var(--bad);font-weight:700}.grn{color:var(--ok);font-weight:700}
+.pill{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:800;background:var(--line)}
+.on{color:var(--ok)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:6px 12px;cursor:pointer;font-weight:700}
+.chip.on2{background:var(--pri);color:var(--on);border-color:var(--pri)}
+.chip s{margin-left:8px;color:var(--bad);text-decoration:none}
+input[type=text],input[type=email],input[type=password],select{width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);margin:4px 0 10px}
+label{font-weight:800;font-size:14px}
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:10px;margin:14px 0}
+.pod{text-align:center;border-radius:14px 14px 0 0;padding:8px 10px;min-width:92px;background:var(--line)}
+.pod.p1{height:130px;background:linear-gradient(#ffe14d,#f0b400);color:#4a3600;animation:bob 2s infinite}
+.pod.p2{height:104px;background:linear-gradient(#e6edf3,#b9c6d3);color:#233}
+.pod.p3{height:86px;background:linear-gradient(#f0c9a0,#c98a50);color:#3b2410}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.timer{font:600 22px var(--hf);color:var(--pri)}.timer.low{color:var(--bad)}
+.qn{display:flex;flex-wrap:wrap;gap:6px}
+.qn button{width:34px;height:34px;border-radius:9px;border:2px solid var(--line);background:var(--card);cursor:pointer;font-weight:800}
+.qn .a{background:var(--pri);color:var(--on);border-color:var(--pri)}.qn .c{outline:3px solid var(--acc)}
+.mat{background:color-mix(in srgb,var(--pri) 8%,var(--card));border-radius:12px;padding:10px 14px;margin:8px 0}
+details summary{cursor:pointer;font-weight:800;color:var(--pri)}
+.foot{text-align:center;color:var(--mut);font-size:13px;padding:20px 14px 70px}
+.foot a{color:var(--mut)}
+#toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:12px;z-index:90;opacity:0;transition:.3s;pointer-events:none}
+#toast.on{opacity:1}
+#thb{position:fixed;right:14px;bottom:14px;z-index:60;width:48px;height:48px;border-radius:50%;border:0;background:var(--pri);color:var(--on);font-size:22px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+#thp{position:fixed;right:14px;bottom:70px;z-index:60;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px;display:grid;gap:4px}
+#thp[hidden]{display:none}
+#thp button{border:0;background:transparent;padding:8px 14px;text-align:left;cursor:pointer;border-radius:8px;font-weight:700}
+#thp button.on{background:var(--pri);color:var(--on)}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:80}
+.warn{background:color-mix(in srgb,var(--acc) 22%,var(--card));border:2px solid var(--acc);border-radius:14px;padding:10px 14px;font-size:14px}
+@media(max-width:560px){.hero{flex-direction:column;align-items:flex-start}.nav .brand{font-size:16px}.qt{font-size:19px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#bg{display:none}}
+</style>
+</head>
+<body>
+<div id="bg" aria-hidden="true"></div>
+<div id="app"></div>
+<div id="toast" role="status"></div>
+<canvas id="cf" aria-hidden="true"></canvas>
+<button id="thb" aria-label="Pilih tema">🎨</button>
+<div id="thp" hidden></div>
+<script>
+/* ========= KONFIGURASI (ganti saat membuat app baru) ========= */
+const APP='grammarlab7', LS='gl7', LSH='gl7h', LST='gl7theme', LSS='gl7sum';
+const FB_CONFIG={apiKey:"AIzaSyColgOqIe8x85GhGPf-XfqliYJRJA8IR2E",authDomain:"belajar-12213.firebaseapp.com",databaseURL:"https://belajar-12213-default-rtdb.firebaseio.com",projectId:"belajar-12213",storageBucket:"belajar-12213.firebasestorage.app",messagingSenderId:"895600575663",appId:"1:895600575663:web:8da1be8ff62a622998c05a"};
+const TEMAIL='ysril852@gmail.com', TPIN='123456';
+const KL=['Kelas 7 SMP','Kelas 8 SMP','Kelas 9 SMP','Kelas 10 SMA','Kelas 11 SMA','Kelas 12 SMA','Lainnya…'];
+const NM_F=['Sari','Dewi','Rina','Putri','Ayu','Wulan','Nita','Intan','Maya','Citra'];
+const NM_M=['Budi','Andi','Rudi','Joko','Dimas','Fajar','Rizki','Bayu','Eko','Hadi'];
+const PL=['library','classroom','kitchen','garden','canteen','mosque','park','market','yard','laboratory'];
+
+/* ========= HELPER ========= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[ri(0,a.length-1)];
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const cap=s=>s?s[0].toUpperCase()+s.slice(1):s;
+const low=x=>x==='I'?x:x.toLowerCase();
+const art=w=>/^[aeiou]/i.test(w)?'an':'a';
+const beP=p=>p=='1'?'am':p=='s'?'is':'are';
+const beX=p=>(p=='1'||p=='s')?'was':'were';
+const slug=s=>String(s).toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'x';
+const ukey=(s,k,n)=>slug(s)+'__'+slug(k)+'__'+slug(n);
+const rm=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
+const J=o=>JSON.parse(JSON.stringify(o));
+const sg=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
+const ss=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const tsg=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+
+/* ========= MESIN SOAL ========= */
+function Q(q,a,e,c,img){
+  const ds=sh([...new Set(c)]).filter(x=>x&&x!==a).slice(0,3);
+  return{q,a,e,o:sh([a,...ds]),img:img||'',bad:ds.length<3};
+}
+const qk=q=>q.q+'|'+q.a;
+function genSet(b,s,l,n=25,pv=[]){
+  const f=T[b].sub[s].g[l],seen=new Set,out=[];let t=0;
+  while(out.length<n&&t<n*60){t++;const q=f(),k=qk(q);
+    if(seen.has(k))continue; if(t<n*30&&pv.includes(k))continue;
+    seen.add(k);q.b=b;q.s=s;q.l=l;out.push(q)}
+  return out;
+}
+function genMix(b,n=25,pv=[]){
+  const seen=new Set,out=[];let t=0;
+  while(out.length<n&&t<n*60){t++;const s=ri(0,T[b].sub.length-1),l=ri(0,2),q=T[b].sub[s].g[l](),k=qk(q);
+    if(seen.has(k)||(t<n*30&&pv.includes(k)))continue;seen.add(k);q.b=b;q.s=s;q.l=l;out.push(q)}
+  return out;
+}
+
+/* ========= DATA KONTEKS ========= */
+const mkS=(t,p,pr,po,ob)=>({t,p,pr,po,ob});
+const SN=[...NM_F.map(n=>mkS(n,'s','She','her','her')),...NM_M.map(n=>mkS(n,'s','He','his','him'))];
+const SX=[mkS('My father','s','He','his','him'),mkS('My mother','s','She','her','her'),mkS('My sister','s','She','her','her'),mkS('My brother','s','He','his','him'),mkS('The cat','s','It','its','it'),mkS('The students','p','They','their','them'),mkS('My friends','p','They','their','them'),mkS('Budi and Sari','p','They','their','them'),mkS('The children','p','They','their','them'),mkS('My parents','p','They','their','them'),mkS('The birds','p','They','their','them'),mkS('Dimas and Putri','p','They','their','them')];
+const S7=[mkS('I','1','I','my','me'),mkS('You','2','You','your','you'),mkS('He','s','He','his','him'),mkS('She','s','She','her','her'),mkS('It','s','It','its','it'),mkS('We','p','We','our','us'),mkS('They','p','They','their','them')];
+const PER=[...SN,...SX],ALL=[...PER,...S7],PS=PER.filter(x=>x.p=='s'),PP=PER.filter(x=>x.pr!=='It');
+const v=(b,s,p,g,o,r)=>({b,s,p,g,o,r:!!r});
+const VB=[v('play','plays','played','playing','football'),v('walk','walks','walked','walking','to school'),v('cook','cooks','cooked','cooking','rice'),v('clean','cleans','cleaned','cleaning','the room'),v('watch','watches','watched','watching','TV'),v('help','helps','helped','helping','the teacher'),v('study','studies','studied','studying','English'),v('listen','listens','listened','listening','to music'),v('open','opens','opened','opening','the window'),v('wash','washes','washed','washing','the dishes'),v('visit','visits','visited','visiting','the museum'),v('paint','paints','painted','painting','a picture'),
+v('go','goes','went','going','to the market',1),v('eat','eats','ate','eating','fried rice',1),v('drink','drinks','drank','drinking','milk',1),v('write','writes','wrote','writing','a letter',1),v('read','reads','read','reading','a book',1),v('buy','buys','bought','buying','a pen',1),v('see','sees','saw','seeing','a movie',1),v('take','takes','took','taking','a bus',1),v('swim','swims','swam','swimming','in the pool',1),v('run','runs','ran','running','in the park',1),v('sing','sings','sang','singing','a song',1),v('make','makes','made','making','a cake',1)];
+const VP=VB.filter(x=>x.b!==x.p);
+const vs=(x,p)=>p=='s'?x.s:x.b;
+const wrongBe=b=>pick(['am','is','are'].filter(x=>x!==b));
+const ADJ=['happy','tall','in the classroom','from Indonesia','at home','hungry','ready','busy','late','at school','tired','in the garden'];
+const TM1=['every day','every morning','every Sunday','every afternoon','on Mondays','every weekend'];
+const TP=['yesterday','last night','last week','two days ago','last Sunday','last month'];
+const CC='Choose the correct sentence.';
+
+/* ========= GAMBAR SVG (preposisi tempat) ========= */
+function svgRel(r){
+  const box=(x,y,w,h,f)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="${f||'#c9d6e2'}" stroke="#6b7f95" stroke-width="3"/>`;
+  const ball=(x,y,rr=13)=>`<circle cx="${x}" cy="${y}" r="${rr}" fill="#ff9f1c" stroke="#b36b00" stroke-width="3"/>`;
+  let g='';
+  if(r=='on')g=box(60,70,80,52)+ball(100,57);
+  else if(r=='in')g=ball(100,92)+`<rect x="60" y="66" width="80" height="60" rx="8" fill="none" stroke="#6b7f95" stroke-width="3" stroke-dasharray="7 5"/>`;
+  else if(r=='under')g=box(60,28,80,46)+ball(100,100);
+  else if(r=='next to')g=box(36,66,76,56)+ball(150,108);
+  else if(r=='in front of')g=box(60,50,80,56)+ball(100,106,18);
+  else if(r=='behind')g=ball(138,86,20)+box(50,60,86,56);
+  else g=box(14,70,54,52)+box(132,70,54,52)+ball(100,100);
+  return `<svg viewBox="0 0 200 150" role="img" aria-label="Posisi bola terhadap kotak"><line x1="6" y1="128" x2="194" y2="128" stroke="#6b7f95" stroke-width="2"/>${g}</svg>`;
+}
+
+/* ========= GENERATOR SOAL ========= */
+const SB=(n,m,a,b,c)=>({n,m,g:[a,b,c]});
+const OBJV=['Please help','Please call','Let\'s wait for','We talk to','I know','I miss','Look at','Listen to'];
+const CT=['Bandung','Medan','Malang','Solo','Bali','Padang','Jakarta','Makassar'];
+const SP=[['study','studies','English'],['watch','watches','TV'],['go','goes','to the market'],['wash','washes','the dishes'],['teach','teaches','English'],['carry','carries','the books'],['fix','fixes','bicycles'],['fly','flies','kites'],['pass','passes','the ball'],['brush','brushes','the cat'],['cry','cries','in the movie'],['miss','misses','the bus'],['catch','catches','fish'],['mix','mixes','the paint']];
+const SPL=[['run','running'],['swim','swimming'],['sit','sitting'],['write','writing'],['make','making'],['dance','dancing'],['come','coming'],['have','having'],['play','playing'],['study','studying'],['stop','stopping'],['cut','cutting'],['get','getting'],['ride','riding'],['take','taking'],['use','using'],['lie','lying'],['plan','planning'],['shop','shopping'],['jump','jumping'],['give','giving'],['begin','beginning'],['clean','cleaning'],['read','reading']];
+const ST=[['like','pizza'],['love','music'],['want','some water'],['need','help'],['know','the answer'],['understand','the lesson'],['hate','spiders'],['prefer','tea'],['believe','you'],['own','a bike']];
+const N31=[['apple','an'],['egg','an'],['umbrella','an'],['orange','an'],['elephant','an'],['eraser','an'],['ice cream','an'],['ant','an'],['owl','an'],['onion','an'],['engine','an'],['hour','an'],['honest man','an'],['banana','a'],['book','a'],['pen','a'],['ruler','a'],['table','a'],['chair','a'],['bag','a'],['cat','a'],['window','a'],['door','a'],['university','a'],['uniform','a'],['unicorn','a'],['European','a'],['one-way ticket','a'],['student','a']];
+const PLU=[['book','books'],['bus','buses'],['box','boxes'],['city','cities'],['boy','boys'],['knife','knives'],['leaf','leaves'],['church','churches'],['dish','dishes'],['baby','babies'],['potato','potatoes'],['photo','photos'],['man','men'],['woman','women'],['child','children'],['foot','feet'],['tooth','teeth'],['mouse','mice'],['family','families'],['watch','watches'],['day','days'],['toy','toys'],['radio','radios'],['wolf','wolves'],['glass','glasses'],['bench','benches'],['tomato','tomatoes'],['country','countries']];
+const REL=[['on','di atas'],['in','di dalam'],['under','di bawah'],['next to','di samping'],['in front of','di depan'],['behind','di belakang'],['between','di antara']];
+const PIN=[['{N} lives ___ Jalan Merdeka.','on'],['{N} is waiting ___ the bus stop.','at'],['{N} lives ___ Surabaya.','in'],['{N} is ___ home now.','at'],['{N} is ___ the bathroom.','in'],['{N} sits ___ the sofa.','on'],['{N} is ___ the second floor.','on'],['{N} is ___ school now.','at'],['{N} hangs a picture ___ the wall.','on'],['{N} is swimming ___ the pool.','in'],['{N} waits ___ the door.','at'],['{N} lives ___ Indonesia.','in'],['{N} is ___ the airport.','at'],['{N} is ___ the car.','in'],['{N} is ___ the bus.','on']];
+const PIN2=[['{N} lives ___ Jalan Mawar ___ Yogyakarta.','on – in'],['{N} is ___ the library ___ the moment.','at – at'],['{N} puts the book ___ the bag ___ the table.','in – on'],['{N} is ___ school ___ Monday.','at – on'],['{N} was born ___ May ___ 2011.','in – in'],['{N} studies ___ night ___ home.','at – at'],['{N} arrives ___ the airport ___ Monday morning.','at – on']];
+const TIMEP=[['at six o\'clock','at'],['on Monday','on'],['in the morning','in'],['in July','in'],['on 17 August','on'],['at night','at'],['in 2024','in'],['on Sunday morning','on'],['at noon','at'],['on my birthday','on'],['in the afternoon','in'],['in the evening','in'],['at 7.30','at'],['on Friday evening','on'],['in winter','in']];
+const T2=[['{N} brushes {p} teeth ___ going to bed. (sebelum)','before'],['{N} washes {p} hands ___ eating dinner. (sebelum)','before'],['{N} does {p} homework ___ school. (sesudah)','after'],['{N} waits here ___ the bus comes. (sampai)','until'],['{N} sleeps ___ the night. (selama)','during'],['{N} plays football ___ the school break. (selama)','during'],['{N} says a prayer ___ eating. (sebelum)','before'],['{N} goes home ___ the class is over. (sesudah)','after']];
+const MD1=[['mampu','can','{S} ___ swim very well.'],['mampu','can','{S} ___ speak English and Indonesian.'],['wajib','must','{S} ___ wear a helmet when riding a motorcycle.'],['wajib','must','{S} ___ finish the homework today.'],['sebaiknya','should','{S} ___ drink more water.'],['sebaiknya','should','{S} ___ go to bed early.'],['dilarang','mustn\'t','{S} ___ cheat in the exam.'],['dilarang','mustn\'t','{S} ___ throw rubbish in the river.'],['tidak mampu','can\'t','{S} ___ lift the heavy table alone.'],['tidak mampu','can\'t','{S} ___ see the board without glasses.'],['sebaiknya tidak','shouldn\'t','{S} ___ eat too much sugar.'],['sebaiknya tidak','shouldn\'t','{S} ___ stay up late every night.']];
+const MOD=['can','can\'t','must','mustn\'t','should','shouldn\'t'];
+const UNC=['water','milk','rice','sugar','juice','tea','coffee','salt','bread','sand'];
+
+function plWrong(sg_,pl){const c=[sg_+'s',sg_+'es',sg_,sg_.replace(/y$/,'ies'),sg_.replace(/fe?$/,'ves')];if([...new Set(c)].filter(x=>x!==pl).length<3)c.push(sg_+'ies',sg_+'ves');return c}
+
+const T=[
+{t:'To Be & Pronouns',i:'🧑‍🤝‍🧑',sub:[
+SB('To Be: am, is, are',`<b>To be</b> = am / is / are.<ul><li>I → <b>am</b></li><li>He, She, It, nama tunggal → <b>is</b></li><li>You, We, They, jamak → <b>are</b></li></ul>Negatif: <i>am not, isn't, aren't</i>. Contoh: She <b>is</b> happy. They <b>aren't</b> at home.`,
+()=>{const s=pick(ALL),a=pick(ADJ),b=beP(s.p);return Q(`${s.t} ___ ${a}.`,b,`Subjek "${s.t}" memakai "${b}" (I→am; he/she/it/tunggal→is; you/we/they/jamak→are). ${s.t} ${b} ${a}.`,['am','is','are','be'])},
+()=>{const s=pick(PP),p=pick(PL),b=beP(s.p);return Q(`A: Where ___ ${s.t}? B: ${s.pr} ___ in the ${p}.`,`${b} – ${b}`,`Subjek ${s.t} (${s.pr}) memakai ${b} pada pertanyaan dan jawaban.`,['is – is','are – are','is – are','are – is','am – is'])},
+()=>{const s=pick(ALL),a=pick(ADJ),b=beP(s.p);
+  if(Math.random()<.5){const w=['am','is','are'].filter(x=>x!==b);return Q(CC,`${s.t} ${b} ${a}.`,`"${s.t}" berpasangan dengan ${b}.`,[`${s.t} ${w[0]} ${a}.`,`${s.t} ${w[1]} ${a}.`,`${s.t} be ${a}.`])}
+  const n=s.p=='1'?`${s.t} am not ${a}.`:s.p=='s'?`${s.t} isn't ${a}.`:`${s.t} aren't ${a}.`;
+  return Q('Choose the correct negative sentence.',n,`Negatif to be: I am not; he/she/it isn't; you/we/they aren't.`,[`${s.t} am not ${a}.`,`${s.t} isn't ${a}.`,`${s.t} aren't ${a}.`,`${s.t} not ${b} ${a}.`])}),
+SB('Pronouns & Possessives',`<table class="tbl"><tr><th>Subject</th><th>Object</th><th>Poss. adj.</th><th>Poss. pron.</th></tr><tr><td>I</td><td>me</td><td>my</td><td>mine</td></tr><tr><td>you</td><td>you</td><td>your</td><td>yours</td></tr><tr><td>he</td><td>him</td><td>his</td><td>his</td></tr><tr><td>she</td><td>her</td><td>her</td><td>hers</td></tr><tr><td>it</td><td>it</td><td>its</td><td>–</td></tr><tr><td>we</td><td>us</td><td>our</td><td>ours</td></tr><tr><td>they</td><td>them</td><td>their</td><td>theirs</td></tr></table>`,
+()=>{if(Math.random()<.5){const s=pick(PP),c=pick(CT),b=s.p=='s'?'is':'are',vb=s.p=='s'?'lives':'live';return Q(`${s.t} ${vb} in ${c}. ___ ${b} very kind.`,s.pr,`Pronoun subjek pengganti "${s.t}" adalah ${s.pr}.`,['He','She','It','They','We'])}
+  const n=pick(SN),nn=pick(['bag','book','pen','shirt','bike','phone','house','hat']),a=cap(n.po);return Q(`This is ${n.t}. ___ ${nn} is new.`,a,`Kata ganti milik untuk ${n.t} adalah ${a}: ${a} ${nn}.`,['His','Her','Its','Their','My','Your'])},
+()=>{const s=pick(PER),b=s.p=='s'?'is':'are';return Q(`${s.t} ${b} at the door. ${pick(OBJV)} ___.`,s.ob,`Setelah kata kerja/preposisi dipakai object pronoun: ${s.ob}.`,[low(s.pr),s.po,'us','me','him','her','them'].filter(x=>x!==s.ob&&!(['him','her','them'].includes(x))))},
+()=>{const NN=['bag','book','pen','bike','phone','hat','house','umbrella'],PN=['shoes','books','pens','bags'];
+  const o=pick([['my','mine',['my','me','myself']],['your','yours',['your','you','yourself']],['our','ours',['our','us','we']],['their','theirs',['their','them','they']],'n']);
+  let pre,ans,c;if(o==='n'){const n=pick(SN);pre=n.t+"'s";ans=n.po=='his'?'his':'hers';c=n.po=='his'?['him','he','hers']:['her','she','his']}else[pre,ans,c]=o;
+  if(Math.random()<.6){const x=pick(NN);return Q(`This is ${pre} ${x}. It is ___.`,ans,`Possessive pronoun berdiri sendiri tanpa benda: ${ans}.`,c)}
+  const x=pick(PN);return Q(`These are ${pre} ${x}. They are ___.`,ans,`Possessive pronoun berdiri sendiri tanpa benda: ${ans}.`,c)})
+]},
+{t:'Simple Present Tense',i:'⏰',sub:[
+SB('Simple Present: Kalimat Positif',`<b>Kebiasaan & fakta.</b> He/She/It (tunggal) + verb<b>+s/es</b>; I/You/We/They + verb dasar.<ul><li>Akhiran s, sh, ch, x, o → <b>-es</b> (watch→watches, go→goes)</li><li>Konsonan + y → <b>-ies</b> (study→studies)</li></ul>Keterangan: every day, always, usually, never.`,
+()=>{const s=pick(ALL),x=pick(VB),t=pick(TM1),a=vs(x,s.p);return Q(`${s.t} ___ ${x.o} ${t}. (${x.b})`,a,`Simple present untuk kebiasaan. ${s.p=='s'?'Subjek tunggal orang ketiga → '+x.s:'Subjek ini → '+x.b}.`,[s.p=='s'?x.b:x.s,x.g,x.p,'is '+x.b])},
+()=>{const s=pick(PS),x=pick(SP),t=pick(TM1);return Q(`${s.t} ___ ${x[2]} ${t}. (${x[0]})`,x[1],`Verb ${x[0]} + subjek tunggal → ${x[1]} (aturan -es / -ies).`,[x[0]+'s',x[0],x[0]+'es',x[0]+'ing'])},
+()=>{const s=pick(ALL),x=pick(VB),a=vs(x,s.p),w=s.p=='s'?x.b:x.s,r=Math.random();
+  if(r<.4)return Q(CC,`${s.t} ${a} ${x.o}.`,`Subjek ${s.t}: ${a}.`,[`${s.t} ${w} ${x.o}.`,`${s.t} ${x.g} ${x.o}.`,`${s.t} ${s.p=='s'?'do':'does'} ${x.b} ${x.o}.`]);
+  const ad=pick(['always','usually','never','often','sometimes']);
+  return Q(CC,`${s.t} ${ad} ${a} ${x.o}.`,`Adverb frekuensi diletakkan sebelum verb utama.`,[`${s.t} ${a} ${ad} ${x.o}.`,`${s.t} ${ad} ${w} ${x.o}.`,`${s.t} does ${ad} ${x.b} ${x.o}.`])}),
+SB('Simple Present: Negatif & Tanya',`Negatif: S + <b>don't/doesn't</b> + verb dasar. (She <b>doesn't play</b>)<br>Tanya: <b>Do/Does</b> + S + verb dasar? (<b>Does</b> she <b>play</b>?)<br>Jawaban singkat: Yes, she <b>does</b>. / No, they <b>don't</b>.<br>Setelah does/doesn't, verb kembali ke bentuk dasar (tanpa -s).`,
+()=>{const s=pick(ALL),x=pick(VB),a=s.p=='s'?"doesn't":"don't";return Q(`${s.t} ___ ${x.b} ${x.o} on Sundays.`,a,`${s.p=='s'?'Tunggal orang ketiga':'Subjek ini'} → ${a} + verb dasar.`,["doesn't","don't","isn't","not"])},
+()=>{const s=pick(PP),x=pick(VB),aux=s.p=='s'?'does':'do',oth=s.p=='s'?'do':'does';return Q(`A: ___ ${s.t} ${x.b} ${x.o} every day? B: Yes, ${low(s.pr)} ___.`,`${cap(aux)} – ${aux}`,`Tanya: ${cap(aux)} ${s.t} ${x.b}...? Jawaban: Yes, ${low(s.pr)} ${aux}.`,[`${cap(oth)} – ${oth}`,`${cap(aux)} – ${oth}`,`${cap(oth)} – ${aux}`])},
+()=>{const s=pick(ALL),x=pick(VB),a=vs(x,s.p),aux=s.p=='s'?'does':'do',oth=s.p=='s'?'do':'does';
+  if(Math.random()<.5){const n=`${s.t} ${aux=='does'?"doesn't":"don't"} ${x.b} ${x.o}.`;return Q(`Choose the correct negative of: "${s.t} ${a} ${x.o}."`,n,`Negatif: ${aux=='does'?"doesn't":"don't"} + verb dasar.`,[`${s.t} ${aux=='does'?"doesn't":"don't"} ${x.s} ${x.o}.`,`${s.t} ${oth=='does'?"doesn't":"don't"} ${x.b} ${x.o}.`,`${s.t} not ${a} ${x.o}.`])}
+  return Q(`Choose the correct question of: "${s.t} ${a} ${x.o}."`,`${cap(aux)} ${low(s.t)==s.t?s.t:s.t} ${x.b} ${x.o}?`,`Tanya: ${cap(aux)} + subjek + verb dasar.`,[`${cap(aux)} ${s.t} ${x.s} ${x.o}?`,`${cap(oth)} ${s.t} ${x.b} ${x.o}?`,`${cap(beP(s.p))} ${s.t} ${x.b} ${x.o}?`])})
+]},
+{t:'Articles & Plural Nouns',i:'📦',sub:[
+SB('Articles: a, an, the',`<ul><li><b>a</b> + bunyi konsonan (a book, a university)</li><li><b>an</b> + bunyi vokal (an apple, an hour)</li><li><b>the</b> = benda spesifik / sudah disebut</li><li>Tanpa artikel: olahraga (play football), makan (have breakfast), by + kendaraan (by bus)</li></ul>`,
+()=>{const w=pick(N31),fr=pick(['I have ___ #.','This is ___ #.','She wants ___ #.','There is ___ # here.']);return Q(fr.replace('#',w[0]),w[1],`"${w[0]}" diawali bunyi ${w[1]=='an'?'vokal':'konsonan'} → ${w[1]}.`,[w[1]=='a'?'an':'a','some','many'])},
+()=>{const w=pick(N31),p=pick(PL),a=pick(['new','big','small','old','red']),o=w[1]=='a'?'an':'a';return Q(`There is ___ ${w[0]} in the ${p}. ___ ${w[0]} is ${a}.`,`${w[1]} – The`,`Pertama kali disebut → ${w[1]}; sudah disebut → the.`,[`the – The`,`${w[1]} – ${cap(w[1])}`,`${o} – The`])},
+()=>{const n=pick(SN).t,r=Math.random();
+  if(r<.34){const sp=pick(['football','badminton','basketball','volleyball','tennis','chess']);return Q(CC,`${n} plays ${sp} after school.`,'Nama olahraga tidak memakai artikel.',[`${n} plays the ${sp} after school.`,`${n} plays a ${sp} after school.`,`${n} play ${sp} after school.`])}
+  if(r<.67){const m=pick(['breakfast','lunch','dinner']);return Q(CC,`${n} has ${m} at seven o'clock.`,'Waktu makan tidak memakai artikel.',[`${n} has the ${m} at seven o'clock.`,`${n} has a ${m} at seven o'clock.`,`${n} have ${m} at seven o'clock.`])}
+  const tr=pick(['bus','bike','train','car','motorcycle']);return Q(CC,`${n} goes to school by ${tr}.`,'by + kendaraan tidak memakai artikel.',[`${n} goes to school by the ${tr}.`,`${n} goes to school by a ${tr}.`,`${n} goes to the school by ${tr}.`])}),
+SB('Plural Nouns',`<ul><li>Umum: +<b>s</b> (book→books)</li><li>s, x, ch, sh, o → +<b>es</b> (bus→buses, tomato→tomatoes)</li><li>Konsonan+y → <b>ies</b> (city→cities)</li><li>f/fe → <b>ves</b> (knife→knives)</li><li>Tak beraturan: man→men, child→children, foot→feet, tooth→teeth, mouse→mice</li></ul>`,
+()=>{const x=pick(PLU),n=ri(2,9);return Q(`One ${x[0]}, ${n} ___.`,x[1],`Bentuk jamak ${x[0]} = ${x[1]}.`,plWrong(x[0],x[1]))},
+()=>{const x=pick(PLU),n=ri(2,9),nm=pick(SN).t,p=pick(PL);return Q(`Yesterday, ${nm} saw ${n} ___ in the ${p}. (${x[0]})`,x[1],`Setelah angka ${n} dipakai bentuk jamak: ${x[1]}.`,plWrong(x[0],x[1]))},
+()=>{const x=pick(PLU),a=pick(['big','old','new','clean','small','red','dirty']);return Q(CC,`The ${x[1]} are ${a}.`,`Jamak "${x[1]}" memakai "are".`,[`The ${x[1]} is ${a}.`,`The ${x[0]} are ${a}.`,`The ${x[1]}s are ${a}.`])})
+]},
+{t:'Present Continuous',i:'🏃',sub:[
+SB('Present Continuous: Bentuk & Pemakaian',`Sedang berlangsung <b>sekarang</b>: S + <b>am/is/are</b> + verb<b>-ing</b>.<br>Negatif: She <b>isn't</b> cooking. Tanya: <b>Is</b> she cooking?<br>Penanda: now, at the moment, Look!, Listen!`,
+()=>{const s=pick(ALL),x=pick(VB),b=beP(s.p),a=`${b} ${x.g}`;return Q(`${s.t} ___ ${x.o} now. (${x.b})`,a,`Present continuous: ${b} + ${x.g}.`,[vs(x,s.p),`${b} ${x.b}`,`${wrongBe(b)} ${x.g}`,x.g])},
+()=>{const s=pick(PP),x=pick(VB),b=beP(s.p),a=`${b} ${x.g}`;return Q(`A: What ${b} ${s.t} doing? B: ${s.pr} ___ ${x.o}.`,a,`Jawaban atas "What ${b} ... doing?" memakai ${b} + ${x.g}.`,[vs(x,s.p),`${b} ${x.b}`,`${wrongBe(b)} ${x.g}`,x.g])},
+()=>{const s=pick(ALL),x=pick(VB),b=beP(s.p),aux={am:"am not",is:"isn't",are:"aren't"}[b];
+  if(Math.random()<.5)return Q('Choose the correct negative sentence.',`${s.t} ${aux} ${x.g} ${x.o}.`,`Negatif: ${aux} + ${x.g}.`,[`${s.t} ${s.p=='s'?"doesn't":"don't"} ${x.g} ${x.o}.`,`${s.t} ${aux} ${x.b} ${x.o}.`,`${s.t} not ${x.g} ${x.o}.`]);
+  return Q('Choose the correct question.',`${cap(b)} ${s.t} ${x.g} ${x.o}?`,`Tanya: ${cap(b)} + subjek + ${x.g}.`,[`${s.p=='s'?'Does':'Do'} ${s.t} ${x.g} ${x.o}?`,`${cap(b)} ${s.t} ${x.b} ${x.o}?`,`${s.t} ${b} ${x.g} ${x.o}?`])}),
+SB('Spelling -ing & Present Continuous vs Simple Present',`<ul><li>Akhiran -e dihapus: make→making</li><li>CVC (satu suku kata) → huruf akhir digandakan: run→running</li><li>-ie → -ying: lie→lying</li></ul>Simple present: kebiasaan (every day). Continuous: sedang terjadi (now).<br>Stative verbs (like, love, know, want, need, understand…) <b>tidak</b> dipakai dalam continuous.`,
+()=>{const x=pick(SPL),extra=[x[0]+'ing',x[0].replace(/e$/,'')+'ing',x[0]+x[0].slice(-1)+'ing',x[0].slice(0,-1)+'ing',x[0]+'eing',x[0].slice(0,-1)+x[0].slice(-2,-1)+'ing',x[0].slice(0,-1)+'ying'];
+  if(Math.random()<.5)return Q(`The -ing form of "${x[0]}" is ___.`,x[1],`${x[0]} → ${x[1]}.`,extra);
+  const n=pick(SN).t;return Q(`${n} is ___ now. (${x[0]})`,x[1],`${x[0]} → ${x[1]}.`,extra)},
+()=>{const s=pick(ALL),x=pick(VB),b=beP(s.p),g=`${b} ${x.g}`,pres=vs(x,s.p);
+  if(Math.random()<.5){const t=pick(['every day','every morning','every Sunday','on Mondays','every afternoon']);return Q(`${s.t} ___ ${x.o} ${t}. (${x.b})`,pres,`"${t}" = kebiasaan → simple present.`,[g,`${b} ${x.b}`,x.g,x.p])}
+  const f=pick(['now','right now','at the moment','Look!']);const q=f=='Look!'?`Look! ${s.t} ___ ${x.o}. (${x.b})`:`${s.t} ___ ${x.o} ${f}. (${x.b})`;
+  return Q(q,g,`"${f}" = sedang terjadi → present continuous.`,[pres,`${b} ${x.b}`,x.g,`${wrongBe(b)} ${x.g}`])},
+()=>{const s=pick(ALL),x=pick(ST),b=beP(s.p),ger=x[0].replace(/e$/,'')+'ing',pres=s.p=='s'?(x[0]=='own'?'owns':x[0]+'s'):x[0],f=pick(['now','right now','at the moment']);
+  return Q(`${s.t} ___ ${x[1]} ${f}. (${x[0]})`,pres,`${x[0]} adalah stative verb → tetap simple present walau ada "${f}".`,[`${b} ${ger}`,`${b} ${x[0]}`,ger,s.p=='s'?x[0]:x[0]+'s'])})
+]},
+{t:'Prepositions',i:'📍',sub:[
+SB('Prepositions of Place',`<b>in</b> (di dalam), <b>on</b> (di atas, menempel), <b>under</b> (di bawah), <b>next to / beside</b> (di samping), <b>in front of</b> (di depan), <b>behind</b> (di belakang), <b>between</b> (di antara dua benda).<br><b>at</b> = titik lokasi (at home, at school, at the bus stop).`,
+()=>{const r=pick(REL),th=pick(['ball','cat','bag','book','phone','key','cup','toy']),pl=pick(['box','table','bed','chair','desk','sofa']),p2=pick(['box','table','bed','chair','desk','sofa'].filter(x=>x!==pl));
+  const pool=REL.map(x=>x[0]);const img=svgRel(r[0]=='between'?'between':r[0]);
+  const q=r[0]=='between'?`The ${th} is ___ the ${pl} and the ${p2}. (${r[1]})`:`The ${th} is ___ the ${pl}. (${r[1]})`;
+  return Q(q,r[0],`${r[1]} = ${r[0]}.`,pool,img)},
+()=>{const n=pick(SN).t,x=pick(PIN),c=['in','on','at','under'];return Q(x[0].replace('{N}',n),x[1],`Pola: in (ruang/kota/negara), on (permukaan/jalan/kendaraan umum), at (titik lokasi). Jawaban: ${x[1]}.`,c)},
+()=>{const n=pick(SN).t,x=pick(PIN2),p=x[1].split(' – '),c=[];for(const a of['in','on','at'])for(const b of['in','on','at'])if(a+' – '+b!==x[1])c.push(a+' – '+b);
+  return Q(x[0].replace('{N}',n),x[1],`Urutan: ${p[0]} lalu ${p[1]} (in kota/bulan/tahun, on hari/jalan, at titik/jam).`,c)})
+,
+SB('Prepositions of Time',`<ul><li><b>at</b> + jam / night / noon (at 7.30, at night)</li><li><b>on</b> + hari & tanggal (on Monday, on 17 August)</li><li><b>in</b> + bulan, tahun, musim, bagian hari (in July, in 2024, in the morning)</li></ul><b>before</b> (sebelum), <b>after</b> (sesudah), <b>until</b> (sampai), <b>during</b> (selama).`,
+()=>{const n=pick(SN).t,x=pick(TIMEP),fr=pick(['{N} has English class ___ #.','{N} is at home ___ #.','{N} wakes up ___ #.']),w=x[0].split(' ').slice(1).join(' ');return Q(fr.replace('{N}',n).replace('___ #',`___ ${w}`),x[1],`"${x[0]}" memakai ${x[1]}.`,['in','on','at','to'])},
+()=>{const s=pick(SN),x=pick(T2);return Q(x[0].replace('{N}',s.t).replace('{p}',s.po),x[1],`Sesuai arti dalam kurung: ${x[1]}.`,['before','after','until','during'])},
+()=>{const e=pick(['test','party','meeting','lesson','match','exam']),d=pick(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']),h=ri(6,11)+(Math.random()<.5?' a.m.':' p.m.');
+  return Q(CC,`The ${e} is on ${d} at ${h}.`,'Hari → on; jam → at.',[`The ${e} is in ${d} at ${h}.`,`The ${e} is on ${d} in ${h}.`,`The ${e} is at ${d} on ${h}.`])})
+]},
+{t:'Simple Past Tense',i:'⏪',sub:[
+SB('Simple Past: Regular & Irregular',`Kejadian yang sudah selesai (yesterday, last week, two days ago).<ul><li>Regular: verb + <b>-ed</b> (played, studied, stopped)</li><li>Irregular: go→<b>went</b>, eat→<b>ate</b>, buy→<b>bought</b>, see→<b>saw</b>, make→<b>made</b>, write→<b>wrote</b></li></ul>Subjek apa pun memakai bentuk lampau yang sama.`,
+()=>{const s=pick(ALL),x=pick(VB),t=pick(TP);return Q(`${s.t} ___ ${x.o} ${t}. (${x.b})`,x.p,`${t} → simple past: ${x.p}.`,[x.s,x.g,x.r?x.b+(x.b.endsWith('e')?'d':'ed'):x.b,'will '+x.b])},
+()=>{const n=pick(SN).t,[a,b]=sh(VP).slice(0,2),d=pick(['Last Sunday','Yesterday','Last week']);return Q(`${d}, ${n} ___ ${a.o} and then ___ ${b.o}. (${a.b}, ${b.b})`,`${a.p} – ${b.p}`,`Kedua verb dalam bentuk lampau: ${a.p}, ${b.p}.`,[`${a.b} – ${b.p}`,`${a.p} – ${b.b}`,`${a.b} – ${b.b}`,`${a.g} – ${b.p}`])},
+()=>{const s=pick(ALL),x=pick(VP),t=pick(TP);return Q(CC,`${s.t} ${x.p} ${x.o} ${t}.`,`${t} → ${x.p} (bukan did + ${x.p}).`,[`${s.t} did ${x.p} ${x.o} ${t}.`,`${s.t} ${vs(x,s.p)} ${x.o} ${t}.`,x.r?`${s.t} ${x.b+(x.b.endsWith('e')?'d':'ed')} ${x.o} ${t}.`:`${s.t} was ${x.p} ${x.o} ${t}.`])}),
+SB('Simple Past: was/were, Negatif & Tanya',`<b>was/were</b>: I/he/she/it → was; you/we/they → were.<br>Negatif: S + <b>didn't</b> + verb dasar. Tanya: <b>Did</b> + S + verb dasar? Setelah did/didn't verb kembali dasar.`,
+()=>{const s=pick(ALL),p=pick(PL),t=pick(['yesterday','last night','last Sunday','two days ago']),a=beX(s.p);return Q(`${s.t} ___ at the ${p} ${t}.`,a,`${t} → lampau; ${s.t} → ${a}.`,[a=='was'?'were':'was','is','are','am'])},
+()=>{const s=pick(ALL),x=pick(VB),t=pick(TP);
+  if(Math.random()<.5)return Q(`${s.t} ___ ${x.b} ${x.o} ${t}.`,"didn't",`Negatif lampau: didn't + verb dasar.`,["doesn't","don't","wasn't"]);
+  return Q(`___ ${s.t} ${x.b} ${x.o} ${t}?`,'Did',`Tanya lampau: Did + subjek + verb dasar.`,['Do','Does','Was'])},
+()=>{const s=pick(ALL),x=pick(VP),t=pick(TP);
+  if(Math.random()<.5)return Q('Choose the correct negative sentence.',`${s.t} didn't ${x.b} ${x.o} ${t}.`,"Negatif: didn't + verb dasar.",[`${s.t} didn't ${x.p} ${x.o} ${t}.`,`${s.t} don't ${x.b} ${x.o} ${t}.`,`${s.t} not ${x.p} ${x.o} ${t}.`]);
+  return Q('Choose the correct question.',`Did ${s.t} ${x.b} ${x.o} ${t}?`,'Tanya: Did + subjek + verb dasar.',[`Did ${s.t} ${x.p} ${x.o} ${t}?`,`Does ${s.t} ${x.b} ${x.o} ${t}?`,`${s.t} did ${x.b} ${x.o} ${t}?`])})
+]},
+{t:'Modals & There is/are',i:'🧩',sub:[
+SB('Modals: can, must, should',`<ul><li><b>can / can't</b> — mampu / tidak mampu</li><li><b>must</b> — wajib; <b>mustn't</b> — dilarang</li><li><b>should</b> — sebaiknya; <b>shouldn't</b> — sebaiknya tidak</li></ul>Modal + verb dasar (tanpa to, tanpa -s, tanpa -ing). She <b>can swim</b>.`,
+()=>{const s=pick(ALL),m=pick(MD1);return Q(m[2].replace('{S}',s.t)+` (${m[0]})`,m[1],`${m[0]} → ${m[1]}.`,MOD)},
+()=>{const s=pick(SN),r=Math.random();
+  if(r<.4){const x=pick([['a fever','see a doctor'],['a toothache','go to the dentist'],['a test tomorrow','study hard'],['a headache','take a rest'],['a cold','drink warm tea'],['a bad cough','stay at home']]);return Q(`${s.t} has ${x[0]}. ${s.pr} ___ ${x[1]}.`,'should','Memberi saran → should.',["shouldn't","mustn't","can't"])}
+  const x=pick([['NO PARKING','park here','mustn\'t'],['NO SWIMMING','swim here','mustn\'t'],['QUIET PLEASE','talk loudly','mustn\'t'],['KEEP OFF THE GRASS','walk on the grass','mustn\'t'],['WEAR A HELMET','wear a helmet','must'],['WASH YOUR HANDS','wash {p} hands','must'],['STOP','stop here','must']]);
+  const act=x[1].replace('{p}',s.po),c=x[2]=='must'?["mustn't","can't","shouldn't"]:['must','can','should'];
+  return Q(`${s.t} reads a sign: "${x[0]}". ${s.pr} ___ ${act}.`,x[2],x[2]=='must'?'Aturan wajib → must.':'Larangan → mustn\'t.',c)},
+()=>{const s=pick(ALL),m=pick(MOD),x=pick(VB);return Q(CC,`${s.t} ${m} ${x.b} ${x.o}.`,`Modal + verb dasar: ${m} ${x.b}.`,[`${s.t} ${m} ${x.s} ${x.o}.`,`${s.t} ${m} to ${x.b} ${x.o}.`,`${s.t} ${m} ${x.g} ${x.o}.`])}),
+SB('There is / There are, some & any',`<b>There is</b> + benda tunggal / tak terhitung; <b>There are</b> + jamak.<br>Negatif: There <b>isn't</b> / <b>aren't</b> + <b>any</b>. Tanya: <b>Is/Are</b> there <b>any</b> …? Positif: <b>some</b>.<br>Jawaban: Yes, there is. / No, there aren't.`,
+()=>{const x=pick(PLU),p=pick(PL);if(Math.random()<.5)return Q(`There ___ ${art(x[0])} ${x[0]} in the ${p}.`,'is',`Benda tunggal → There is.`,['are','be','have','has']);const n=ri(2,9);return Q(`There ___ ${n} ${x[1]} in the ${p}.`,'are','Benda jamak → There are.',['is','be','have','has'])},
+()=>{const pl=pick(['bag','box','room','kitchen','fridge','garden']),f=pick(['pos','neg','q']),u=Math.random()<.5,x=pick(PLU),w=u?pick(UNC):x[1],be=u?(f=='q'?'Is':'is'):(f=='q'?'Are':'are');
+  let q,a,c;if(f=='pos'){q=`There ${be} ___ ${w} in the ${pl}.`;a='some';c=['any','a','an']}else if(f=='neg'){q=`There ${u?"isn't":"aren't"} ___ ${w} in the ${pl}.`;a='any';c=['a','an','one']}else{q=`${be} there ___ ${w} in the ${pl}?`;a='any';c=['a','an','one']}
+  return Q(q,a,f=='pos'?'Kalimat positif → some.':'Negatif & tanya → any.',c)},
+()=>{const x=pick(PLU),p=pick(PL);
+  if(Math.random()<.5)return Q(CC,`Are there any ${x[1]} in the ${p}?`,'Jamak + tanya → Are there any + jamak?',[`Is there any ${x[1]} in the ${p}?`,`Are there a ${x[1]} in the ${p}?`,`Do there are any ${x[1]} in the ${p}?`]);
+  return Q(`Is there ${art(x[0])} ${x[0]} in the ${p}? — No, ___.`,"there isn't",'Jawaban singkat tanya Is there…? → No, there isn\'t.',["it isn't","there aren't","there not"])})
+]}
+];
+const CH=T.map(c=>c.t),CI=T.map(c=>c.i),GS=T.map((_,i)=>i);
+const HM=['Semester I',0,1,'Penilaian Tengah Sumatif',2,3,'PAS (Penilaian Akhir Semester)','Semester II',4,5,'Penilaian Tengah Sumatif',6,'PAT (Penilaian Akhir Tahun)'];
+const LVN=['Level 1 · Dasar','Level 2 · Kontekstual','Level 3 · HOTS'];
+const sbn=(b,s)=>s<0?`${CH[b]} › Campuran`:`${CH[b]} › ${T[b].sub[s].n}`;
+const EX={};
+
+/* ========= STATE ========= */
+let S=null,V='login',G=0,P=null,X={bs:T.map(()=>true),ls:[true,true,true],n:20,tm:0},SY='off',GA=false,GL=[],GF={sk:'',kl:'',q:''},GD=null,GC=null,LB={t:0,list:[]},LF=null;
+let DB=null,AU=null,OFS=0,PR=null,HB=null,TMI=null,GT=null,svT=null;
+
+const newS=(n,k,s)=>({key:ukey(s,k,n),n,k,s,xp:0,tot:0,ok:0,streak:0,bs:0,last:'',ac:{},st:{},wr:[],xh:[],pv:{},ses:null,perf:false,t:0});
+function norm(d){
+  const b=newS(d.n,d.k,d.s);const o=Object.assign(b,d);
+  ['ac','st','pv'].forEach(k=>{if(!o[k]||typeof o[k]!=='object')o[k]={}});
+  ['wr','xh'].forEach(k=>{if(!o[k])o[k]=[];else if(!Array.isArray(o[k]))o[k]=Object.values(o[k])});
+  if(o.ses){const s=o.ses;s.qs=Array.isArray(s.qs)?s.qs:Object.values(s.qs||{});s.qs.forEach(q=>{q.o=Array.isArray(q.o)?q.o:Object.values(q.o||{})});
+    const a=s.ans||{};s.ans=Array.from({length:s.qs.length},(_,i)=>a[i]==null?null:a[i]);if(s.cfg){s.cfg.bs=Array.isArray(s.cfg.bs)?s.cfg.bs:Object.values(s.cfg.bs);s.cfg.ls=Array.isArray(s.cfg.ls)?s.cfg.ls:Object.values(s.cfg.ls)}}
+  return o;
+}
+const sumOf=s=>({n:s.n,k:s.k,s:s.s,xp:s.xp,tot:s.tot,ok:s.ok,t:Date.now()});
+const today=()=>new Date().toISOString().slice(0,10);
+function touch(){const t=today();if(S.last===t)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.streak=S.last===y?S.streak+1:1;S.last=t;S.bs=Math.max(S.bs||0,S.streak)}
+
+/* ========= SIMPAN & SINKRON ========= */
+function updSy(){const e=$('#sy');if(e)e.textContent={off:'Mode offline',sync:'Menyinkron…',ok:'Tersimpan ✓',err:'Gagal sinkron'}[SY]}
+function persist(){
+  if(!S)return;S.t=Date.now();
+  if(P&&!P.fin){const c=J(P);if(c.ul&&c.end){c.left=Math.max(0,Math.round((c.end-Date.now())/1000))}delete c.end;S.ses=c}
+  ss(LS+'_'+S.key,S);const m=sg(LSS,{});m[S.key]=sumOf(S);ss(LSS,m);
+  if(DB){clearTimeout(svT);SY='sync';updSy();svT=setTimeout(fbWrite,600)}
+}
+const sv=()=>persist();
+function flush(){if(!S)return;persist();if(DB){clearTimeout(svT);fbWrite()}}
+function fbWrite(){
+  if(!DB||!S)return;const d=J(S);
+  DB.ref(`${APP}/detail/${S.key}`).transaction(c=>{if(c&&c.t>d.t)return;return d},(err,ok,snap)=>{
+    if(err){SY='err'}else if(!ok&&snap&&snap.val()){S=norm(snap.val());ss(LS+'_'+S.key,S);SY='ok';if(V=='home')render()}else SY='ok';updSy()},false);
+  DB.ref(`${APP}/ringkas/${S.key}`).set(sumOf(S)).catch(()=>{SY='err';updSy()});
+}
+function loadScripts(a){return a.reduce((p,u)=>p.then(()=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=u;s.onload=res;s.onerror=rej;document.head.appendChild(s)})),Promise.resolve())}
+function fbInit(){
+  if(!FB_CONFIG.apiKey){SY='off';return Promise.resolve(false)}
+  const b='https://www.gstatic.com/firebasejs/10.12.2/';
+  return loadScripts([b+'firebase-app-compat.js',b+'firebase-database-compat.js',b+'firebase-auth-compat.js']).then(()=>{
+    firebase.initializeApp(FB_CONFIG);DB=firebase.database();AU=firebase.auth();DB.ref('.info/serverTimeOffset').on('value',s=>OFS=s.val()||0);SY='ok';return true}).catch(()=>{DB=null;SY='off';return false});
+}
+function presOn(){
+  if(!DB||!S)return;const r=DB.ref(`${APP}/presence/${S.key}`),T_=firebase.database.ServerValue.TIMESTAMP;PR=r;
+  r.onDisconnect().set({on:false,t:T_});const beat=()=>r.set({on:true,pg:V,t:T_});beat();clearInterval(HB);HB=setInterval(beat,30000);
+}
+function presOff(){clearInterval(HB);if(PR){try{PR.set({on:false,t:firebase.database.ServerValue.TIMESTAMP});PR.onDisconnect().cancel()}catch(e){}}PR=null}
+addEventListener('pagehide',flush);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)flush()});
+
+/* ========= NAVIGASI ========= */
+function go(v,id){
+  if(v==='kelas'&&id!=null)G=id;V=v;render();scrollTo(0,0);
+  if(PR)try{PR.update({pg:v})}catch(e){}
+}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)}
+function nav(){
+  const T_=[['home','Beranda'],['ulg','Ulangan'],['prog','Progress'],['guru','Guru'],['val','Validator']],
+  act={kelas:'home',play:'home',res:'home',xplay:'ulg',xres:'ulg',gdet:'guru'}[V]||V;
+  return `<nav class="nav"><span class="brand" onclick="go('home')" role="button" tabindex="0">📚 Grammar Lab 7</span><div class="tabs">${T_.map(t=>`<button class="tab ${act==t[0]?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')}<button class="tab" onclick="logout()">Keluar</button></div><span class="sync" id="sy"></span></nav>`;
+}
+function foot(){return `<footer class="foot">© ${new Date().getFullYear()} Grammar Lab 7 | Platform Eksplorasi Grammar.<br>Sistem &amp; Modul oleh Yusril Ainul Yakin, S.Pd., Gr.<br><a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></footer>`}
+function render(){
+  clearInterval(TMI);TMI=null;
+  const c=(W[V]||W.login)();
+  $('#app').innerHTML=(S&&V!=='login'&&V!=='fail'?nav():'')+`<main class="wrap">${c}</main>`+foot();
+  updSy();
+  if(V==='xplay'&&P&&P.tm>0&&!P.fin){TMI=setInterval(tick,1000);tick()}
+  if(V==='home')lbLoad();
+  if(V==='guru'&&GA){guruLoad();if(!GT)GT=setInterval(()=>{if(V==='guru')guruLoad()},15000)}else if(GT){clearInterval(GT);GT=null}
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.target.matches('[role=button]'))e.target.click()});
+
+/* ========= LOGIN ========= */
+function chipsH(){const h=sg(LSH,[]);return h.length?`<div class="card"><b>Lanjutkan sebagai</b><div class="chips" style="margin-top:8px">${h.map((x,i)=>`<span class="chip"><span role="button" tabindex="0" onclick="loginH(${i})">${esc(x.n)} · ${esc(x.k)} · ${esc(x.s)}</span><s role="button" tabindex="0" aria-label="Hapus riwayat" onclick="delH(${i})">✕</s></span>`).join('')}</div></div>`:''}
+const W={};
+W.login=()=>`<div class="hero" style="margin-bottom:14px"><div><h1>Grammar Lab 7</h1><p style="margin:.3em 0">Latihan Grammar Bahasa Inggris · 7 bab · 3 level · Poin XP</p></div></div>
+${chipsH()}<div class="card"><label for="ln">Nama</label><input type="text" id="ln" maxlength="40" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
+<label for="lk">Kelas</label><select id="lk" onchange="$('#lko').hidden=this.value!==KL[KL.length-1]">${KL.map(k=>`<option>${esc(k)}</option>`).join('')}</select>
+<input type="text" id="lko" maxlength="30" placeholder="Tulis kelas sendiri" hidden>
+<label for="ls">Sekolah</label><input type="text" id="ls" maxlength="50" placeholder="Tulis nama sekolah" autocomplete="off">
+<button class="btn" onclick="doLogin()" style="width:100%">Masuk 🚀</button></div>
+<div class="warn">⚠️ <b>Sportivitas:</b> kerjakan sendiri dan jujur. Kecurangan (misalnya memanipulasi poin) dapat dikenai sanksi: XP direset.</div>`;
+W.fail=()=>`<div class="card" style="text-align:center"><h2>Gagal memuat progres</h2><p>Koneksi bermasalah. Data belum dimuat agar progres tersimpan tidak tertimpa data kosong.</p><button class="btn" onclick="retryLogin()">Coba lagi</button> <button class="btn s" onclick="V='login';render()">Kembali</button></div>`;
+let LC=null;
+async function doLogin(){
+  const n=$('#ln').value.trim().replace(/\s+/g,' '),s=$('#ls').value.trim().replace(/\s+/g,' ');let k=$('#lk').value;if(k===KL[KL.length-1])k=$('#lko').value.trim();
+  if(!n){toast('Isi nama dulu');return}if(!k){toast('Tulis kelas');return}if(!s){toast('Isi nama sekolah');return}
+  LC={n,k,s};await startSession();
+}
+function loginH(i){const x=sg(LSH,[])[i];if(x){LC=x;startSession()}}
+function delH(i){const h=sg(LSH,[]);h.splice(i,1);ss(LSH,h);render()}
+const retryLogin=()=>startSession();
+async function startSession(){
+  const{n,k,s}=LC,key=ukey(s,k,n);let loc=sg(LS+'_'+key,null);let rem=null;
+  if(DB){try{const sn=await Promise.race([DB.ref(`${APP}/detail/${key}`).once('value'),new Promise((_,r)=>setTimeout(()=>r(new Error('to')),9000))]);rem=sn.val()}catch(e){V='fail';render();return}}
+  let d=loc,r=rem;if(r&&(!d||(r.t||0)>(d.t||0)))d=r;
+  S=norm(d?Object.assign({},d,{n,k,s,key}):newS(n,k,s));S.key=key;
+  const h=sg(LSH,[]).filter(x=>!(x.n===n&&x.k===k&&x.s===s));h.unshift({n,k,s});ss(LSH,h.slice(0,6));
+  persist();presOn();P=null;V='home';render();scrollTo(0,0);
+}
+function logout(){flush();presOff();S=null;P=null;GA=false;V='login';render()}
+
+/* ========= BERANDA ========= */
+const lvOf=s=>Math.floor(s.xp/100)+1;
+const accOf=s=>s.tot?Math.round(s.ok/s.tot*100):0;
+const ACH=[['🌱','Langkah Pertama',s=>s.tot>=1],['🔥','3 Hari Beruntun',s=>(s.bs||0)>=3],['💯','Nilai Sempurna',s=>s.perf],['⚡','500 XP',s=>s.xp>=500],['🗺️','Satu Bab Dicoba Semua',s=>T.some((c,b)=>c.sub.every((_,i)=>[0,1,2].some(l=>s.ac[`${b}_${i}_${l}`])))]];
+function chapCard(b,i){const done=T[b].sub.filter((_,s)=>[0,1,2].some(l=>S.ac[`${b}_${s}_${l}`])).length;
+  return `<button class="chap" style="--h:${b*47+190};animation-delay:${i*.05}s" onclick="go('kelas',${b})"><span class="ic">${CI[b]}</span><h3>Bab ${b+1}. ${esc(CH[b])}</h3><small>${done}/${T[b].sub.length} sub-bab dicoba</small></button>`}
+W.home=()=>{
+  const ses=S.ses,pc=ses?Math.round((ses.i+1)/ses.qs.length*100):0;
+  return `<section class="hero"><div style="flex:1"><div class="lvb">Level ${lvOf(S)}</div><h1>Halo, ${esc(S.n)}!</h1><div>${esc(S.k)} · ${esc(S.s)}</div><div class="xpb" aria-label="Progres XP"><i style="width:${S.xp%100}%"></i></div><small>${S.xp%100}/100 XP menuju level berikutnya</small></div><div style="font-size:64px">📚</div></section>
+<div class="stats"><div class="stat"><b>🔥 ${S.streak}</b>Streak hari</div><div class="stat"><b>${S.tot}</b>Soal</div><div class="stat"><b>${accOf(S)}%</b>Akurasi</div><div class="stat"><b>${S.xp}</b>XP</div></div>
+${ses?`<div class="card" style="border-color:var(--acc)"><b>Ada sesi yang belum selesai</b><div style="color:var(--mut)">${ses.ul?'Ulangan mandiri':esc(sbn(ses.b,ses.s))} · soal ${ses.i+1}/${ses.qs.length}</div><div class="bar" style="margin:8px 0"><i style="width:${pc}%"></i></div><div class="row"><button class="btn" onclick="resume()">Lanjutkan</button><button class="btn s" onclick="delSes()">Hapus sesi</button></div></div>`:''}
+<h2>Peta Belajar</h2><div class="grid">${HM.map((m,i)=>typeof m==='string'?`<div class="mark">${esc(m)}</div>`:chapCard(m,i)).join('')}</div>
+<h2>Pencapaian</h2><div class="chips">${ACH.map(a=>`<span class="chip ${a[2](S)?'on2':''}" style="${a[2](S)?'':'opacity:.5'}">${a[0]} ${a[1]}</span>`).join('')}</div>
+<h2>Leaderboard Top 10</h2>${lbHtml()}`;
+};
+function lbHtml(){
+  const L=LB.list;if(!L.length)return '<div class="card">Belum ada data.</div>';
+  const pod=[1,0,2].filter(i=>L[i]).map(i=>`<div class="pod p${i+1}"><div style="font-size:26px">${['👑','🥈','🥉'][i]}</div><b>${esc(L[i].n)}</b><div>${L[i].xp} XP</div></div>`).join('');
+  return `<div class="podium">${pod}</div>${L.length>3?`<div class="card tbl-w"><table class="tbl">${L.slice(3,10).map((x,i)=>`<tr><td>${i+4}</td><td>${esc(x.n)}</td><td>${esc(x.k)}</td><td>${x.xp} XP</td></tr>`).join('')}</table></div>`:''}`;
+}
+async function lbLoad(){
+  if(Date.now()-LB.t<30000)return;LB.t=Date.now();let m={};
+  try{if(DB){m=(await DB.ref(`${APP}/ringkas`).once('value')).val()||{}}else m=sg(LSS,{})}catch(e){m=sg(LSS,{})}
+  const list=Object.values(m).sort((a,b)=>b.xp-a.xp).slice(0,10);const a=JSON.stringify(list),b=JSON.stringify(LB.list);LB.list=list;
+  if(a!==b&&V==='home'){const y=scrollY;render();scrollTo(0,y)}
+}
+function resume(){P=J(S.ses);if(P.ul){P.end=Date.now()+(P.left||0)*1000;V='xplay'}else V='play';render();scrollTo(0,0)}
+function delSes(){if(!confirm('Hapus sesi yang belum selesai?'))return;S.ses=null;P=null;sv();render()}
+
+/* ========= KELAS (daftar sub-bab) ========= */
+function exOf(b,s){const k=b+'_'+s;if(!EX[k])EX[k]=T[b].sub[s].g[0]();return EX[k]}
+W.kelas=()=>{
+  const c=T[G];
+  return `<div class="row"><button class="btn s" onclick="go('home')">‹ Beranda</button></div><h2>${CI[G]} Bab ${G+1}. ${esc(c.t)}</h2>
+${c.sub.map((sb,s)=>{const ex=exOf(G,s);return `<div class="card"><h3>${esc(sb.n)}</h3>
+<details><summary>📖 Materi &amp; contoh soal</summary><div class="mat">${sb.m}</div><div class="mat"><b>Contoh:</b><br>${qh(ex.q)}<br><b>Jawaban:</b> ${esc(ex.a)}<br><small>${esc(ex.e)}</small></div></details>
+<div class="row" style="margin-top:10px">${[0,1,2].map(l=>{const k=`${G}_${s}_${l}`,st=S.st[k],a=S.ac[k],ses=S.ses&&!S.ses.ul&&S.ses.b===G&&S.ses.s===s&&S.ses.l===l;
+  const stt=ses?`Lanjut soal ${S.ses.i+1}/${S.ses.qs.length}`:st?`${'★'.repeat(st.s)}${'☆'.repeat(3-st.s)} · terbaik ${st.b}`:a?`${a.n} soal dijawab`:'25 soal';
+  return `<button class="lv l${l}" onclick="${ses?'resume()':`start(${G},${s},${l})`}">${LVN[l]}<small>${stt}</small></button>`}).join('')}</div></div>`}).join('')}
+<div class="card"><h3>🎲 Ulangan Campuran Bab ${G+1}</h3><p style="margin:0 0 8px;color:var(--mut)">25 soal acak dari semua sub-bab dan level.</p><button class="btn" onclick="startMix(${G})">Mulai</button></div>`;
+};
+const qh=t=>esc(t).replace(/___/g,'<span class="blank"></span>').replace(/ (B: )/,'<br>$1');
+function confirmNew(){if(S.ses)return confirm('Ada sesi yang belum selesai. Mulai sesi baru dan hapus yang lama?');return true}
+function start(b,s,l){
+  if(!confirmNew())return;const k=`${b}_${s}_${l}`;
+  P={mode:'lat',b,s,l,qs:genSet(b,s,l,25,S.pv[k]||[]),ans:[],i:0};P.ans=P.qs.map(()=>null);S.ses=null;sv();V='play';render();scrollTo(0,0);
+}
+function startMix(b){
+  if(!confirmNew())return;P={mode:'lat',b,s:-1,l:-1,qs:genMix(b,25,S.pv[b+'_mix']||[]),ans:[],i:0};P.ans=P.qs.map(()=>null);S.ses=null;sv();V='play';render();scrollTo(0,0);
+}
+
+/* ========= SOAL LATIHAN ========= */
+function recordAns(q,ok){
+  const k=`${q.b}_${q.s}_${q.l}`,a=S.ac[k]||(S.ac[k]={n:0,ok:0});a.n++;if(ok)a.ok++;
+  if(!ok){const i=S.wr.findIndex(w=>w.q===q.q&&w.a===q.a);if(i>=0){S.wr[i].c++;S.wr[i].t=Date.now()}else S.wr.push({q:q.q,a:q.a,e:q.e,c:1,t:Date.now(),im:q.img?1:0});
+    if(S.wr.length>80){S.wr.sort((x,y)=>y.t-x.t);S.wr=S.wr.slice(0,60)}}
+}
+function ans(i){
+  if(P.ans[P.i]!=null)return;const q=P.qs[P.i],ok=q.o[i]===q.a;P.ans[P.i]=i;
+  S.tot++;if(ok){S.ok++;S.xp+=10}recordAns(q,ok);touch();sv();render();
+}
+function nextQ(){if(P.i<P.qs.length-1){P.i++;sv();render();scrollTo(0,0)}else finishLat()}
+const starsOf=sc=>sc>=90?3:sc>=70?2:sc>=40?1:0;
+function finishLat(){
+  const n=P.qs.length,ok=P.qs.filter((q,i)=>q.o[P.ans[i]]===q.a).length,sc=Math.round(ok/n*100),st=starsOf(sc);
+  let bonus=20;if(sc===100){bonus+=50;S.perf=true}S.xp+=bonus;
+  const bk=P.s<0?P.b+'_mix':`${P.b}_${P.s}_${P.l}`;
+  const o=S.st[bk];if(!o||sc>o.b)S.st[bk]={b:sc,s:Math.max(st,o?o.s:0)};else if(st>o.s)o.s=st;
+  S.pv[bk]=P.qs.map(qk);P.fin={ok,n,sc,st,bonus};S.ses=null;sv();V='res';render();scrollTo(0,0);if(sc>=70)confetti();
+}
+function playHead(){return `<div class="row" style="justify-content:space-between"><span class="pill">${esc(sbn(P.b,P.s))}${P.l>=0?' · '+LVN[P.l]:''}</span><span>Soal ${P.i+1}/${P.qs.length}</span></div><div class="bar" style="margin:8px 0"><i style="width:${(P.i+(P.ans[P.i]!=null?1:0))/P.qs.length*100}%"></i></div>`}
+W.play=()=>{
+  const q=P.qs[P.i],a=P.ans[P.i],done=a!=null,last=P.i===P.qs.length-1;
+  return `<div class="card">${playHead()}<div class="qt">${qh(q.q)}</div>${q.img?`<div class="qimg">${q.img}</div>`:''}
+<div class="opts">${q.o.map((o,i)=>`<button class="opt ${done?(o===q.a?'ok':i===a?'bad':'dim'):''}" ${done?'disabled':''} onclick="ans(${i})"><b>${'ABCD'[i]}</b>${esc(o)}</button>`).join('')}</div>
+${done?`<div class="fb ${q.o[a]===q.a?'ok':'bad'}"><b>${q.o[a]===q.a?'✅ Benar! +10 XP':'❌ Belum tepat.'}</b><div>Jawaban benar: <b>${esc(q.a)}</b></div><div style="color:var(--mut)">${esc(q.e)}</div></div><button class="btn" onclick="nextQ()">${last?'Lihat hasil':'Soal berikutnya ›'}</button>`:''}
+</div><button class="btn s" onclick="go('home')">Simpan &amp; keluar</button>`;
+};
+W.res=()=>{
+  const f=P.fin,msg=f.sc>=90?['🏆','Luar biasa!']:f.sc>=70?['🎉','Bagus sekali!']:f.sc>=40?['👍','Terus berlatih!']:['💪','Jangan menyerah!'];
+  return `<div class="card" style="text-align:center"><div style="font-size:60px">${msg[0]}</div><h2>${msg[1]}</h2><div class="big">${f.sc}</div><div class="stars" aria-label="${f.st} bintang">${'★'.repeat(f.st)}${'☆'.repeat(3-f.st)}</div><p>${f.ok} benar dari ${f.n} soal · +${f.ok*10+f.bonus} XP</p>
+<div class="row" style="justify-content:center"><button class="btn" onclick="${P.s<0?`startMix(${P.b})`:`start(${P.b},${P.s},${P.l})`}">Ulangi</button>${P.l>=0&&P.l<2?`<button class="btn s" onclick="start(${P.b},${P.s},${P.l+1})">Level berikutnya</button>`:''}<button class="btn s" onclick="go('kelas',${P.b})">Pilih materi lain</button></div></div>`;
+};
+
+/* ========= ULANGAN MANDIRI ========= */
+W.ulg=()=>`<h2>📝 Ulangan Mandiri</h2><div class="card"><b>Pilih bab</b><div class="chips" style="margin:8px 0">${T.map((c,b)=>`<span class="chip ${X.bs[b]?'on2':''}" role="button" tabindex="0" onclick="X.bs[${b}]=!X.bs[${b}];render()">${CI[b]} Bab ${b+1}. ${esc(c.t)}</span>`).join('')}</div>
+<b>Pilih level</b><div class="chips" style="margin:8px 0">${LVN.map((l,i)=>`<span class="chip ${X.ls[i]?'on2':''}" role="button" tabindex="0" onclick="X.ls[${i}]=!X.ls[${i}];render()">${l}</span>`).join('')}</div>
+<b>Jumlah soal</b><div class="chips" style="margin:8px 0">${[10,20,25,40].map(n=>`<span class="chip ${X.n===n?'on2':''}" role="button" tabindex="0" onclick="X.n=${n};render()">${n}</span>`).join('')}</div>
+<b>Waktu</b><div class="chips" style="margin:8px 0">${[0,15,30,45,60].map(n=>`<span class="chip ${X.tm===n?'on2':''}" role="button" tabindex="0" onclick="X.tm=${n};render()">${n?n+' menit':'Tanpa waktu'}</span>`).join('')}</div>
+<button class="btn" onclick="xstart()">Mulai ulangan</button></div>
+<h3>Ulangan terakhir</h3>${S.xh.length?`<div class="card tbl-w"><table class="tbl">${S.xh.slice(0,5).map(h=>`<tr><td>${new Date(h.t).toLocaleString('id-ID')}</td><td>${esc(h.m)}</td><td>${esc(h.l)}</td><td><b>${h.sc}</b></td></tr>`).join('')}</table></div>`:'<div class="card">Belum ada ulangan.</div>'}`;
+function xstart(){
+  const bs=X.bs.map((v,i)=>v?i:-1).filter(i=>i>=0),ls=X.ls.map((v,i)=>v?i:-1).filter(i=>i>=0);
+  if(!bs.length||!ls.length){toast('Pilih minimal satu bab dan satu level');return}if(!confirmNew())return;
+  const seen=new Set,qs=[];let t=0;while(qs.length<X.n&&t<X.n*60){t++;const b=pick(bs),s=ri(0,T[b].sub.length-1),l=pick(ls),q=T[b].sub[s].g[l](),k=qk(q);if(seen.has(k))continue;seen.add(k);q.b=b;q.s=s;q.l=l;qs.push(q)}
+  P={mode:'ul',ul:true,qs,ans:qs.map(()=>null),i:0,tm:X.tm,left:X.tm*60,end:Date.now()+X.tm*60000,cfg:{bs,ls,n:X.n}};S.ses=null;sv();V='xplay';render();scrollTo(0,0);
+}
+function tick(){
+  const left=Math.max(0,Math.round((P.end-Date.now())/1000)),e=$('#tm');
+  if(e){e.textContent=`⏱ ${Math.floor(left/60)}:${String(left%60).padStart(2,'0')}`;e.classList.toggle('low',left<60)}
+  if(left<=0){clearInterval(TMI);toast('Waktu habis!');finishUl(true)}
+}
+function xans(i){P.ans[P.i]=i;sv();render()}
+function xgo(i){P.i=i;sv();render();scrollTo(0,0)}
+W.xplay=()=>{
+  const q=P.qs[P.i],a=P.ans[P.i],n=P.qs.length;
+  return `<div class="card"><div class="row" style="justify-content:space-between"><span class="pill">Ulangan mandiri</span>${P.tm?`<span class="timer" id="tm"></span>`:''}<span>Soal ${P.i+1}/${n}</span></div>
+<div class="qn" style="margin:10px 0">${P.qs.map((_,i)=>`<button class="${P.ans[i]!=null?'a':''} ${i===P.i?'c':''}" onclick="xgo(${i})" aria-label="Soal ${i+1}">${i+1}</button>`).join('')}</div>
+<div class="qt">${qh(q.q)}</div>${q.img?`<div class="qimg">${q.img}</div>`:''}
+<div class="opts">${q.o.map((o,i)=>`<button class="opt ${a===i?'sel':''}" onclick="xans(${i})"><b>${'ABCD'[i]}</b>${esc(o)}</button>`).join('')}</div>
+<div class="row" style="margin-top:14px"><button class="btn s" ${P.i===0?'disabled':''} onclick="xgo(${P.i-1})">‹ Sebelumnya</button><button class="btn s" ${P.i===n-1?'disabled':''} onclick="xgo(${P.i+1})">${a==null?'Lewati ›':'Berikutnya ›'}</button><button class="btn" onclick="finishUl(false)">Selesai</button></div></div><button class="btn s" onclick="go('home')">Simpan &amp; keluar</button>`;
+};
+function finishUl(auto){
+  if(!P||P.fin)return;const un=P.ans.filter(x=>x==null).length;
+  if(!auto&&un&&!confirm(`${un} soal belum dijawab. Selesaikan ulangan?`))return;
+  clearInterval(TMI);const n=P.qs.length;let ok=0;
+  P.qs.forEach((q,i)=>{const c=q.o[P.ans[i]]===q.a;S.tot++;if(c){ok++;S.ok++;S.xp+=10}recordAns(q,c)});
+  const sc=Math.round(ok/n*100);let bonus=20;if(sc===100){bonus+=50;S.perf=true}S.xp+=bonus;touch();
+  const m={};P.qs.forEach((q,i)=>{const k=q.b+'_'+q.s,r=m[k]||(m[k]={b:q.b,s:q.s,n:0,ok:0});r.n++;if(q.o[P.ans[i]]===q.a)r.ok++});
+  P.fin={ok,n,sc,st:starsOf(sc),bonus,m:Object.values(m)};
+  S.xh.unshift({t:Date.now(),m:[...new Set(P.qs.map(q=>'Bab '+(q.b+1)))].join(', '),l:P.cfg.ls.map(l=>l+1).join(','),sc});S.xh=S.xh.slice(0,12);
+  S.ses=null;sv();V='xres';render();scrollTo(0,0);if(sc>=70)confetti();
+}
+W.xres=()=>{
+  const f=P.fin;
+  return `<div class="card" style="text-align:center"><h2>Hasil Ulangan</h2><div class="big">${f.sc}</div><div class="stars">${'★'.repeat(f.st)}${'☆'.repeat(3-f.st)}</div><p><span class="grn">${f.ok} benar</span> · <span class="red">${f.n-f.ok} salah</span> · +${f.ok*10+f.bonus} XP</p></div>
+<div class="card"><h3>Penguasaan per materi</h3>${f.m.map(r=>{const p=Math.round(r.ok/r.n*100);return `<div style="margin:8px 0"><div class="row" style="justify-content:space-between"><span>${esc(sbn(r.b,r.s))}</span><b class="${p<60?'red':'grn'}">${p}% (${r.ok}/${r.n})</b></div><div class="bar"><i style="width:${p}%;background:${p<60?'var(--bad)':'var(--ok)'}"></i></div></div>`}).join('')}</div>
+<div class="card"><h3>Review soal</h3>${P.qs.map((q,i)=>{const a=P.ans[i],ok=q.o[a]===q.a;return `<div style="padding:10px 0;border-top:1px solid var(--line)"><b>${i+1}.</b> ${qh(q.q)}${q.img?`<div class="qimg">${q.img}</div>`:''}<div>Jawabanmu: <b class="${ok?'grn':'red'}">${a==null?'(kosong)':esc(q.o[a])}</b>${ok?'':` · Benar: <b class="grn">${esc(q.a)}</b>`}</div><small style="color:var(--mut)">${esc(q.e)}</small></div>`}).join('')}</div>
+<div class="row"><button class="btn" onclick="go('ulg')">Ulangan baru</button><button class="btn s" onclick="go('home')">Beranda</button></div>`;
+};
+
+/* ========= PROGRESS ========= */
+W.prog=()=>`<h2>📊 Progress</h2>${T.map((c,b)=>{let n=0,ok=0,tr=0;c.sub.forEach((_,s)=>[0,1,2].forEach(l=>{const a=S.ac[`${b}_${s}_${l}`];if(a){n+=a.n;ok+=a.ok}}));const tried=c.sub.filter((_,s)=>[0,1,2].some(l=>S.ac[`${b}_${s}_${l}`])).length;
+  return `<div class="card"><h3>${CI[b]} Bab ${b+1}. ${esc(c.t)}</h3><small>${tried}/${c.sub.length} sub-bab dicoba · akurasi ${n?Math.round(ok/n*100):0}%</small><div class="tbl-w"><table class="tbl"><tr><th>Sub-bab</th><th>L1</th><th>L2</th><th>L3</th></tr>${c.sub.map((sb,s)=>`<tr><td>${esc(sb.n)}</td>${[0,1,2].map(l=>{const t=S.st[`${b}_${s}_${l}`];return `<td>${t?t.b+' '+'★'.repeat(t.s):'–'}</td>`}).join('')}</tr>`).join('')}</table></div></div>`}).join('')}
+<div class="card"><h3>Riwayat ulangan mandiri</h3>${S.xh.length?`<div class="tbl-w"><table class="tbl"><tr><th>Waktu</th><th>Materi</th><th>Level</th><th>Skor</th></tr>${S.xh.map(h=>`<tr><td>${new Date(h.t).toLocaleString('id-ID')}</td><td>${esc(h.m)}</td><td>${esc(h.l)}</td><td><b>${h.sc}</b></td></tr>`).join('')}</table></div>`:'Belum ada.'}</div>
+<div class="card"><h3>Soal yang pernah salah</h3>${S.wr.length?[...S.wr].sort((a,b)=>b.c-a.c||b.t-a.t).slice(0,10).map(w=>`<div style="padding:8px 0;border-top:1px solid var(--line)">${qh(w.q)}${w.im?' 🖼️':''}<div>Benar: <b class="grn">${esc(w.a)}</b> · salah ${w.c}×</div><small style="color:var(--mut)">${esc(w.e)}</small></div>`).join(''):'Belum ada soal salah. 🎉'}</div>`;
+
+/* ========= GURU ========= */
+W.guru=()=>{
+  if(!GA)return `<div class="card" style="max-width:420px;margin:auto"><h2>Dashboard Guru</h2><label for="ge">Email</label><input type="email" id="ge"><label for="gp">PIN</label><input type="password" id="gp" onkeydown="if(event.key==='Enter')gLogin()"><button class="btn" onclick="gLogin()">Masuk</button></div>`;
+  const sks=[...new Set(GL.map(x=>x.s))],kls=[...new Set(GL.map(x=>x.k))];
+  return `<h2>Dashboard Guru</h2><div class="card"><div class="row"><select id="fs" style="width:auto" onchange="GF.sk=this.value;gt()"><option value="">Semua sekolah</option>${sks.map(x=>`<option ${GF.sk===x?'selected':''}>${esc(x)}</option>`).join('')}</select><select id="fk" style="width:auto" onchange="GF.kl=this.value;gt()"><option value="">Semua kelas</option>${kls.map(x=>`<option ${GF.kl===x?'selected':''}>${esc(x)}</option>`).join('')}</select><input type="text" placeholder="Cari nama" style="width:200px" value="${esc(GF.q)}" oninput="GF.q=this.value;gt()"><span id="gon" class="pill"></span><span class="sync">${DB?'Realtime':'Data perangkat ini (offline)'}</span></div><div class="tbl-w" id="gtb">${gtbl()}</div></div>`;
+};
+function gRows(){return GL.filter(x=>(!GF.sk||x.s===GF.sk)&&(!GF.kl||x.k===GF.kl)&&(!GF.q||x.n.toLowerCase().includes(GF.q.toLowerCase())))}
+const isOn=p=>p&&p.on&&(Date.now()+OFS-p.t)<75000;
+function gtbl(){const r=gRows();const on=r.filter(x=>isOn(x.p)).length;setTimeout(()=>{const e=$('#gon');if(e)e.textContent=`${on} online`},0);
+  return `<table class="tbl"><tr><th>Status</th><th>Nama</th><th>Kelas</th><th>Sekolah</th><th>XP</th><th>Soal</th><th>Akurasi</th><th>Terakhir aktif</th></tr>${r.map(x=>`<tr style="cursor:pointer" onclick="gopen('${esc(x.key)}')"><td>${isOn(x.p)?'<span class="on">● online</span>':'○'}</td><td>${esc(x.n)}</td><td>${esc(x.k)}</td><td>${esc(x.s)}</td><td>${x.xp}</td><td>${x.tot}</td><td>${x.tot?Math.round(x.ok/x.tot*100):0}%</td><td>${x.t?new Date(x.t).toLocaleString('id-ID'):'–'}</td></tr>`).join('')||'<tr><td colspan="8">Belum ada siswa.</td></tr>'}</table>`}
+function gt(){const e=$('#gtb');if(e)e.innerHTML=gtbl()}
+function gLogin(){const e=$('#ge').value.trim(),p=$('#gp').value;if(e.toLowerCase()===TEMAIL.toLowerCase()&&p===TPIN){GA=true;render()}else toast('Email atau PIN salah')}
+async function guruLoad(){
+  try{let m,pr={};if(DB){m=(await DB.ref(`${APP}/ringkas`).once('value')).val()||{};pr=(await DB.ref(`${APP}/presence`).once('value')).val()||{}}else m=sg(LSS,{});
+    GL=Object.entries(m).map(([key,x])=>Object.assign({key},x,{p:pr[key]})).sort((a,b)=>b.xp-a.xp);if(V==='guru'){gt()}}catch(e){}
+  if(V==='guru'&&!$('#gtb')&&GA)render();
+}
+async function gopen(key){
+  let d=null;try{d=DB?(await DB.ref(`${APP}/detail/${key}`).once('value')).val():sg(LS+'_'+key,null)}catch(e){}
+  if(!d){toast('Data tidak ditemukan');return}GD=norm(d);GD.key=key;GC=null;V='gdet';render();scrollTo(0,0);
+}
+W.gdet=()=>{
+  const d=GD,rows=[];
+  T.forEach((c,b)=>c.sub.forEach((sb,s)=>[0,1,2].forEach(l=>{const a=d.ac[`${b}_${s}_${l}`];if(a)rows.push({b,s,l,n:a.n,p:Math.round(a.ok/a.n*100)})})));
+  const weak=rows.filter(r=>r.n>=5).sort((a,b)=>a.p-b.p).slice(0,5);
+  return `<button class="btn s" onclick="go('guru')">‹ Daftar siswa</button><h2>${esc(d.n)} <small>(${esc(d.k)} · ${esc(d.s)})</small></h2>
+<div class="stats"><div class="stat"><b>${d.xp}</b>XP</div><div class="stat"><b>${d.streak}</b>Streak</div><div class="stat"><b>${d.tot}</b>Soal</div><div class="stat"><b>${accOf(d)}%</b>Akurasi</div></div>
+<div class="card"><h3>Akurasi per bab</h3>${T.map((c,b)=>{let n=0,o=0;c.sub.forEach((_,s)=>[0,1,2].forEach(l=>{const a=d.ac[`${b}_${s}_${l}`];if(a){n+=a.n;o+=a.ok}}));const p=n?Math.round(o/n*100):0;return `<div style="margin:6px 0">Bab ${b+1}. ${esc(c.t)} — <b>${p}%</b> (${n} soal)<div class="bar"><i style="width:${p}%"></i></div></div>`}).join('')}</div>
+<div class="card"><h3>⚠️ Perlu bimbingan</h3>${weak.length?weak.map(r=>`<div>${esc(sbn(r.b,r.s))} · L${r.l+1} — <b class="red">${r.p}%</b> (${r.n} soal)</div>`).join(''):'Belum ada materi dengan ≥5 soal per level.'}</div>
+<div class="card tbl-w"><h3>Akurasi per sub-bab</h3><table class="tbl"><tr><th>Sub-bab</th><th>L1</th><th>L2</th><th>L3</th></tr>${T.flatMap((c,b)=>c.sub.map((sb,s)=>`<tr><td>${b+1}. ${esc(sb.n)}</td>${[0,1,2].map(l=>{const a=d.ac[`${b}_${s}_${l}`];if(!a)return '<td>–</td>';const p=Math.round(a.ok/a.n*100);return `<td class="${p<60?'red':'grn'}">${p}% <small>(${a.n})</small></td>`}).join('')}</tr>`)).join('')}</table></div>
+<div class="card"><h3>Riwayat ulangan</h3>${d.xh.length?d.xh.map(h=>`<div>${new Date(h.t).toLocaleString('id-ID')} · ${esc(h.m)} · L${esc(h.l)} · <b>${h.sc}</b></div>`).join(''):'Belum ada.'}</div>
+<div class="card"><h3>Soal yang sering salah</h3>${d.wr.length?[...d.wr].sort((a,b)=>b.c-a.c).slice(0,10).map(w=>`<div style="padding:6px 0;border-top:1px solid var(--line)">${qh(w.q)}<br>Benar: <b>${esc(w.a)}</b> · ${w.c}×</div>`).join(''):'Tidak ada.'}</div>
+<div class="card"><h3>Kelola data</h3>${DB?(AU&&AU.currentUser?`<button class="btn d" onclick="gdel('${esc(d.key)}')">${GC===d.key?'Yakin hapus? Klik lagi':'Hapus data siswa'}</button>`:`<label>Login admin</label><input type="email" id="ae" placeholder="Email admin"><input type="password" id="ap" placeholder="Password"><div class="row"><button class="btn" onclick="adminIn()">Masuk</button><button class="btn s" onclick="adminG()">Masuk dengan Google</button></div>`):`<button class="btn d" onclick="gdel('${esc(d.key)}')">${GC===d.key?'Yakin hapus? Klik lagi':'Hapus data lokal siswa'}</button>`}</div>`;
+};
+async function adminIn(){try{await AU.signInWithEmailAndPassword($('#ae').value,$('#ap').value);render()}catch(e){toast('Login admin gagal')}}
+async function adminG(){try{await AU.signInWithPopup(new firebase.auth.GoogleAuthProvider());render()}catch(e){toast('Login Google gagal')}}
+async function gdel(key){
+  if(GC!==key){GC=key;render();return}
+  try{if(DB){await Promise.all(['detail','ringkas','presence'].map(p=>DB.ref(`${APP}/${p}/${key}`).remove()))}
+    try{localStorage.removeItem(LS+'_'+key)}catch(e){}const m=sg(LSS,{});delete m[key];ss(LSS,m);GC=null;toast('Data dihapus');GL=GL.filter(x=>x.key!==key);go('guru')}catch(e){toast('Gagal hapus (perlu admin)')}
+}
+
+/* ========= VALIDATOR ========= */
+let VR=null;
+W.val=()=>`<h2>🧪 Validator Soal</h2><div class="card"><p>Membuat seluruh soal (semua bab, sub-bab, level) lalu memeriksa: 25 soal unik per level, jawaban ada di opsi, opsi tidak ganda, minimal 4 opsi.</p><button class="btn" onclick="runVal()">Jalankan validator</button></div>${VR?`<div class="card"><h3>Total soal: ${VR.total} · Temuan: ${VR.issues.length}</h3>${VR.issues.length?VR.issues.slice(0,40).map(x=>`<div class="red">• ${esc(x)}</div>`).join(''):'<div class="grn">✓ Semua soal lolos pemeriksaan.</div>'}</div>`:''}`;
+function runVal(){
+  const issues=[];let total=0;
+  T.forEach((c,b)=>c.sub.forEach((sb,s)=>[0,1,2].forEach(l=>{
+    const qs=genSet(b,s,l,25),tag=`Bab ${b+1}.${s+1} L${l+1}`;total+=qs.length;
+    if(qs.length<25)issues.push(`${tag}: hanya ${qs.length} soal unik`);
+    qs.forEach((q,i)=>{if(!q.o.includes(q.a))issues.push(`${tag} #${i+1}: jawaban tidak ada di opsi`);if(new Set(q.o).size!==q.o.length)issues.push(`${tag} #${i+1}: opsi ganda`);if(q.o.length<4||q.bad)issues.push(`${tag} #${i+1}: pengecoh kurang — ${q.q}`)});
+  })));
+  VR={total,issues};render();
+}
+
+/* ========= TEMA, PARTIKEL, CONFETTI ========= */
+const TH=[['samudra','Samudra','🫧'],['synthwave','Synthwave','✦'],['sakura','Sakura','🌸'],['kode','Kode Hijau','is/are'],['light','Terang','☀️'],['dark','Gelap','🌙']];
+function setTheme(t,save){document.documentElement.dataset.theme=t;if(save)try{localStorage.setItem(LST,t)}catch(e){}particles(t);
+  $('#thp').innerHTML=TH.map(x=>`<button class="${x[0]===t?'on':''}" onclick="setTheme('${x[0]}',true)">${x[1]}</button>`).join('')}
+function particles(t){const ch=(TH.find(x=>x[0]===t)||TH[0])[2],list=t=='kode'?['is','are','-s','-ed','-ing','a','an']:[ch];
+  $('#bg').innerHTML=rm()?'':Array.from({length:14},(_,i)=>`<span style="left:${ri(0,96)}%;animation-duration:${ri(14,30)}s;animation-delay:-${ri(0,25)}s">${list[i%list.length]}</span>`).join('')}
+$('#thb').onclick=()=>{const p=$('#thp');p.hidden=!p.hidden};
+function confetti(){
+  if(rm())return;const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const ps=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,vx:Math.random()*4-2,vy:Math.random()*3+3,c:`hsl(${ri(0,360)} 90% 60%)`,s:ri(5,10)}));let f=0;
+  (function a(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;x.fillStyle=p.c;x.fillRect(p.x,p.y,p.s,p.s)});if(++f<150)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height)})();
+}
+
+/* ========= MULAI ========= */
+(async function init(){
+  const th=tsg(LST),t=th&&TH.some(x=>x[0]===th)?th:(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'samudra');
+  setTheme(t,false);render();await fbInit();updSy();
+})();
+</script>
+</body>
+</html>
