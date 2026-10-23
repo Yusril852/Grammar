@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Grammar Lab 1 | Platform Eksplorasi Grammar</title>
+<title>Grammar | Platform Eksplorasi Grammar</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@400;600&family=Nunito:wght@400;700;800&family=Orbitron:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -470,7 +470,8 @@ SB('Singular Number','<b>Singular</b> = tunggal (satu): a book, one child. Memak
 SB('Plural Number','<b>Plural</b> = jamak: +s (books), +es (boxes), -y→-ies (cities), -f/fe→-ves (knives), tak beraturan (men, children).',gNumber(false))]}
 ];
 const CH=T.map(c=>c.t),CI=T.map(c=>c.i),GS=T.map((_,i)=>i);
-const HM=['Semester I',0,1,2,'Penilaian Tengah Sumatif',3,4,'PAS (Penilaian Akhir Semester)','Semester II',5,6,7,'Penilaian Tengah Sumatif',8,9,'PAT (Penilaian Akhir Tahun)'];
+const HM=T.map((_,i)=>i);
+const subDone=(b,s)=>!!S.st[`${b}_${s}_0`],lesDone=b=>T[b].sub.filter((_,s)=>subDone(b,s)).length;
 const sbn=(b,s)=>s<0?`Lesson ${b+1} › Campuran`:`Lesson ${b+1} › ${String.fromCharCode(65+s)}. ${T[b].sub[s].n}`;
 const EX={};
 
@@ -530,11 +531,11 @@ function go(v,id){
 }
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)}
 function nav(){
-  const T_=[['home','Beranda'],['ulg','Ulangan'],['prog','Progress'],['guru','Guru'],['val','Validator']],
+  const T_=[['buku','Buku'],['home','Grammar 1'],['ulg','Ulangan'],['prog','Progress'],['guru','Guru'],['val','Validator']],
   act={kelas:'home',play:'home',res:'home',xplay:'ulg',xres:'ulg',gdet:'guru'}[V]||V;
-  return `<nav class="nav"><span class="brand" onclick="go('home')" role="button" tabindex="0">📚 Grammar Lab 1</span><div class="tabs">${T_.map(t=>`<button class="tab ${act==t[0]?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')}<button class="tab" onclick="logout()">Keluar</button></div><span class="sync" id="sy"></span></nav>`;
+  return `<nav class="nav"><span class="brand" onclick="go('buku')" role="button" tabindex="0">📚 GRAMMAR</span><div class="tabs">${T_.map(t=>`<button class="tab ${act==t[0]?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')}<button class="tab" onclick="logout()">Keluar</button></div><span class="sync" id="sy"></span></nav>`;
 }
-function foot(){return `<footer class="foot">© ${new Date().getFullYear()} Grammar Lab 1 | Platform Eksplorasi Grammar.<br>Sistem &amp; Modul oleh Yusril Ainul Yakin, S.Pd., Gr.<br><a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></footer>`}
+function foot(){return `<footer class="foot">© ${new Date().getFullYear()} Grammar Lab | Platform Eksplorasi Grammar.<br>Sistem &amp; Modul oleh Yusril Ainul Yakin, S.Pd., Gr.<br><a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></footer>`}
 function render(){
   clearInterval(TMI);TMI=null;
   const c=(W[V]||W.login)();
@@ -549,7 +550,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.
 /* ========= LOGIN ========= */
 function chipsH(){const h=sg(LSH,[]);return h.length?`<div class="card"><b>Lanjutkan sebagai</b><div class="chips" style="margin-top:8px">${h.map((x,i)=>`<span class="chip"><span role="button" tabindex="0" onclick="loginH(${i})">${esc(x.n)} · ${esc(x.k)} · ${esc(x.s)}</span><s role="button" tabindex="0" aria-label="Hapus riwayat" onclick="delH(${i})">✕</s></span>`).join('')}</div></div>`:''}
 const W={};
-W.login=()=>`<div class="hero" style="margin-bottom:14px"><div><h1>Grammar Lab 1</h1><p style="margin:.3em 0">Latihan Grammar 1 · 10 lesson · 40 sub-bab · 20 soal per sub-bab</p></div></div>
+W.login=()=>`<div class="hero" style="margin-bottom:14px"><div><h1>GRAMMAR</h1><p style="margin:.3em 0">Latihan Grammar Bahasa Inggris · Poin XP</p></div></div>
 ${chipsH()}<div class="card"><label for="ln">Nama</label><input type="text" id="ln" maxlength="40" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
 <label for="lk">Kelas</label><select id="lk" onchange="$('#lko').hidden=this.value!==KL[KL.length-1]">${KL.map(k=>`<option>${esc(k)}</option>`).join('')}</select>
 <input type="text" id="lko" maxlength="30" placeholder="Tulis kelas sendiri" hidden>
@@ -572,22 +573,26 @@ async function startSession(){
   let d=loc,r=rem;if(r&&(!d||(r.t||0)>(d.t||0)))d=r;
   S=norm(d?Object.assign({},d,{n,k,s,key}):newS(n,k,s));S.key=key;
   const h=sg(LSH,[]).filter(x=>!(x.n===n&&x.k===k&&x.s===s));h.unshift({n,k,s});ss(LSH,h.slice(0,6));
-  persist();presOn();P=null;V='home';render();scrollTo(0,0);
+  persist();presOn();P=null;V='buku';render();scrollTo(0,0);
 }
 function logout(){flush();presOff();S=null;P=null;GA=false;V='login';render()}
 
+/* ========= PILIH BUKU ========= */
+const BOOKS=[{n:'Grammar 1',d:'10 lesson · 40 sub-bab · 800 soal',ok:true,i:'📗'},{n:'Grammar 2',d:'Segera hadir',i:'📘'},{n:'Grammar 3',d:'Segera hadir',i:'📙'},{n:'Grammar 4',d:'Segera hadir',i:'📕'}];
+W.buku=()=>`<section class="hero"><div style="flex:1"><div class="lvb">Level ${lvOf(S)} · ${S.xp} XP</div><h1>Halo, ${esc(S.n)}!</h1><div>${esc(S.k)} · ${esc(S.s)}</div></div><div style="font-size:64px">📚</div></section>
+<h2>Pilih Buku</h2><div class="grid">${BOOKS.map((b,i)=>b.ok?`<button class="chap" style="--h:${150+i*50}" onclick="go('home')"><span class="ic">${b.i}</span><h3>${b.n}</h3><small>${b.d}</small></button>`:`<div class="chap" style="--h:${150+i*50};filter:grayscale(.85);opacity:.55;cursor:not-allowed" aria-disabled="true"><span class="ic">${b.i}</span><h3>${b.n}</h3><small>${b.d}</small></div>`).join('')}</div>`;
 /* ========= BERANDA ========= */
 const lvOf=s=>Math.floor(s.xp/100)+1;
 const accOf=s=>s.tot?Math.round(s.ok/s.tot*100):0;
-const ACH=[['🌱','Langkah Pertama',s=>s.tot>=1],['🔥','3 Hari Beruntun',s=>(s.bs||0)>=3],['💯','Nilai Sempurna',s=>s.perf],['⚡','500 XP',s=>s.xp>=500],['🗺️','Satu Lesson Dicoba Semua',s=>T.some((c,b)=>c.sub.every((_,i)=>[0].some(l=>s.ac[`${b}_${i}_${l}`])))]];
-function chapCard(b,i){const done=T[b].sub.filter((_,s)=>[0].some(l=>S.ac[`${b}_${s}_${l}`])).length;
-  return `<button class="chap" style="--h:${b*47+190};animation-delay:${i*.05}s" onclick="go('kelas',${b})"><span class="ic">${CI[b]}</span><h3>Lesson ${b+1}. ${esc(CH[b])}</h3><small>${done}/${T[b].sub.length} sub-bab dicoba</small></button>`}
+const ACH=[['🌱','Langkah Pertama',s=>s.tot>=1],['🔥','3 Hari Beruntun',s=>(s.bs||0)>=3],['💯','Nilai Sempurna',s=>s.perf],['⚡','500 XP',s=>s.xp>=500],['🏅','Satu Lesson Selesai',s=>T.some((c,b)=>c.sub.every((_,i)=>s.st[`${b}_${i}_0`]))]];
+function chapCard(b,i){const d=lesDone(b),n=T[b].sub.length,ok=d===n;
+  return `<button class="chap" style="--h:${b*36+150};animation-delay:${i*.05}s" onclick="go('kelas',${b})"><span class="ic">${CI[b]}</span><h3>Lesson ${b+1}. ${esc(CH[b])}${ok?' ✅':''}</h3><small>${d}/${n} sub-bab selesai</small><div class="xpb" style="min-width:0"><i style="width:${d/n*100}%"></i></div></button>`}
 W.home=()=>{
   const ses=S.ses,pc=ses?Math.round((ses.i+1)/ses.qs.length*100):0;
   return `<section class="hero"><div style="flex:1"><div class="lvb">Level ${lvOf(S)}</div><h1>Halo, ${esc(S.n)}!</h1><div>${esc(S.k)} · ${esc(S.s)}</div><div class="xpb" aria-label="Progres XP"><i style="width:${S.xp%100}%"></i></div><small>${S.xp%100}/100 XP menuju level berikutnya</small></div><div style="font-size:64px">📚</div></section>
-<div class="stats"><div class="stat"><b>🔥 ${S.streak}</b>Streak hari</div><div class="stat"><b>${S.tot}</b>Soal</div><div class="stat"><b>${accOf(S)}%</b>Akurasi</div><div class="stat"><b>${S.xp}</b>XP</div></div>
+<div class="stats"><div class="stat"><b>🔥 ${S.streak}</b>Streak hari</div><div class="stat"><b>${S.tot}</b>Soal</div><div class="stat"><b>${accOf(S)}%</b>Akurasi</div><div class="stat"><b>${S.xp}</b>XP</div><div class="stat"><b>${T.filter((_,b)=>lesDone(b)===T[b].sub.length).length}/${T.length}</b>Lesson selesai</div></div>
 ${ses?`<div class="card" style="border-color:var(--acc)"><b>Ada sesi yang belum selesai</b><div style="color:var(--mut)">${ses.ul?'Ulangan mandiri':esc(sbn(ses.b,ses.s))} · soal ${ses.i+1}/${ses.qs.length}</div><div class="bar" style="margin:8px 0"><i style="width:${pc}%"></i></div><div class="row"><button class="btn" onclick="resume()">Lanjutkan</button><button class="btn s" onclick="delSes()">Hapus sesi</button></div></div>`:''}
-<h2>Peta Belajar</h2><div class="grid">${HM.map((m,i)=>typeof m==='string'?`<div class="mark">${esc(m)}</div>`:chapCard(m,i)).join('')}</div>
+<h2>Daftar Lesson</h2><div class="grid">${HM.map((m,i)=>typeof m==='string'?`<div class="mark">${esc(m)}</div>`:chapCard(m,i)).join('')}</div>
 <h2>Pencapaian</h2><div class="chips">${ACH.map(a=>`<span class="chip ${a[2](S)?'on2':''}" style="${a[2](S)?'':'opacity:.5'}">${a[0]} ${a[1]}</span>`).join('')}</div>
 <h2>Leaderboard Top 10</h2>${lbHtml()}`;
 };
@@ -609,8 +614,8 @@ function delSes(){if(!confirm('Hapus sesi yang belum selesai?'))return;S.ses=nul
 function exOf(b,s){const k=b+'_'+s;if(!EX[k])EX[k]=T[b].sub[s].g[0]();return EX[k]}
 W.kelas=()=>{
   const c=T[G];
-  return `<div class="row"><button class="btn s" onclick="go('home')">‹ Beranda</button></div><h2>${CI[G]} Lesson ${G+1}. ${esc(c.t)}</h2>
-${c.sub.map((sb,s)=>{const ex=exOf(G,s);return `<div class="card"><h3>${String.fromCharCode(65+s)}. ${esc(sb.n)}</h3>
+  return `<div class="row"><button class="btn s" onclick="go('home')">‹ Grammar 1</button></div><h2>${CI[G]} Lesson ${G+1}. ${esc(c.t)}</h2><div class="card"><b>${lesDone(G)}/${c.sub.length} sub-bab selesai</b>${lesDone(G)===c.sub.length?' ✅ Lesson tuntas!':''}<div class="bar" style="margin-top:8px"><i style="width:${lesDone(G)/c.sub.length*100}%"></i></div></div>
+${c.sub.map((sb,s)=>{const ex=exOf(G,s);return `<div class="card"><h3>${String.fromCharCode(65+s)}. ${esc(sb.n)}${subDone(G,s)?' <span class="pill" style="background:var(--ok);color:#fff">✓ Selesai</span>':''}</h3>
 <details><summary>📖 Materi &amp; contoh soal</summary><div class="mat">${sb.m}</div><div class="mat"><b>Contoh:</b><br>${qh(ex.q)}<br><b>Jawaban:</b> ${esc(ex.a)}<br><small>${esc(ex.e)}</small></div></details>
 <div class="row" style="margin-top:10px">${(()=>{const k=`${G}_${s}_0`,st=S.st[k],a=S.ac[k],ses=S.ses&&!S.ses.ul&&S.ses.b===G&&S.ses.s===s;
   const stt=ses?`Lanjut soal ${S.ses.i+1}/${S.ses.qs.length}`:st?`${'★'.repeat(st.s)}${'☆'.repeat(3-st.s)} · terbaik ${st.b}`:a?`${a.n} soal dijawab`:'20 soal';
